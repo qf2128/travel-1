@@ -3,12 +3,19 @@
     <div>
 Question1: Destination of your new Journey
     <select value="destination" onchange={submitDestination}>
+
         <option value="">---</option>
-        <option value="Shanghai">Shanghai</option>
-        <option value="Paris">Paris</option>
+        <option value="Amsterdam">Amsterdam</option>
+        <option value="Burlin">Burlin</option>
+        <option value="Chicago">Chicago</option>
+        <option value="Hawaii">Hawaii</option>
         <option value="London">London</option>
-        <option value="New York">New York</option>
         <option value="Japan">Japan</option>
+        <option value="Los Angeles">Los Angeles</option>
+        <option value="Milano">Milano</option>
+        <option value="New York">New York</option>
+        <option value="Paris">Paris</option>
+        <option value="Shanghai">Shanghai</option>
     </select>
 </div>
 <!-- time: from
