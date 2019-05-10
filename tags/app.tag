@@ -46,7 +46,7 @@ let usersRef = database.collection('users');
        usersRef.doc(this.user.email).get().then(function(doc){
            var data=doc.data()
 
-           if (!data.userAge){
+           if (!doc.exists){
                console.log('no profile',data)
                that.profileState="createProfile";
 
