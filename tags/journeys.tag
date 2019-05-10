@@ -3,7 +3,6 @@
     <div>
 Question1: Destination of your new Journey
     <select value="destination" onchange={submitDestination}>
-
         <option value="">---</option>
         <option value="Amsterdam">Amsterdam</option>
         <option value="Burlin">Burlin</option>
@@ -98,13 +97,21 @@ Question1: Destination of your new Journey
 </div>
 
 <div>
-<p> Choose a star rating of accomodation </p>
-<button type="button" class="btn btn-outline-dark" id="button">1 star</button>
-<button type="button" class="btn btn-outline-dark" id="button"> 2 star </button>
-<button type="button" class="btn btn-outline-dark" id="button"> 3 star </button>
-  <button type="button" class="btn btn-outline-dark" id="button"> 4 star </button>
-    <button type="button" class="btn btn-outline-dark" id="button"> 5 star </button>
+<p> Question4: Choose a star rating of accomodation </p>
+<button type="button" class="btn btn-outline-dark" id="button1">1 star</button>
+<button type="button" class="btn btn-outline-dark" id="button1"> 2 star </button>
+<button type="button" class="btn btn-outline-dark" id="button1"> 3 star </button>
+  <button type="button" class="btn btn-outline-dark" id="button1"> 4 star </button>
+    <button type="button" class="btn btn-outline-dark" id="button1"> 5 star </button>
 </div>
+
+  <div>
+  <p> Question5: Choose your ideal transportation during travel <id="button2"p> <br>
+  <button type="button" class="btn btn-outline-dark" id="button2"> Self-driving</button>
+  <button type="button" class="btn btn-outline-dark" id="button2"> Public Transportation </button>
+  <button type="button" class="btn btn-outline-dark" id="button2"> Uber/Taxi </button>
+  </div>
+
 
 <button type="button" name="button" onclick={submitJourney}>Submit</button>
     <script>
@@ -117,6 +124,7 @@ Question1: Destination of your new Journey
     var firstPrefer=""
     var secondPrefer=""
     var thirdPrefer=""
+    var transportation=""
         submitDestination(){
             destination=event.target.value
             observer.trigger('destination',destination)
@@ -149,10 +157,14 @@ Question1: Destination of your new Journey
              // console.log('thirdPrefer',thirdPrefer)
          }
           document.body.addEventListener("click", event => {
-              if (event.target.id == "button") {
+              if (event.target.id == "button1") {
                 console.log("Clicked", event.target.textContent);
                 accomodation=event.target.textContent
-              }
+            } else if (event.target.id == "button2"){
+                console.log("Clicked", event.target.textContent);
+                transportation=event.target.textContent
+                console.log('transportation',transportation)
+            }
             });
 
           submitJourney(){
@@ -162,7 +174,8 @@ Question1: Destination of your new Journey
                        accomodation:accomodation,
                        firstPrefer:firstPrefer,
                        secondPrefer:secondPrefer,
-                       thirdPrefer:thirdPrefer
+                       thirdPrefer:thirdPrefer,
+                       transportation:transportation
                    }
                 observer.trigger('journey',journey)
           }

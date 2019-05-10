@@ -1,12 +1,11 @@
 <app>
 
 <navbar user={user}></navbar>
-
-<button type="button" name=""  onclick={setProfile} if={user} hide={this.state==="setProfile"}>New user? create your profile</button>
-<button type="button" name=""  onclick={setJourneys} if={user} hide={this.state==="newJourneys"}>Start a new journey?</button>
+<button type="button" name=""  onclick={setProfile} if={profileState==="createProfile"}>New user? create your profile</button>
+<button type="button" name=""  onclick={setJourneys} if={user&&profileState==="profileDone"} hide={this.journeyState==="newJourneys"}>Start a new journey?</button>
 
 <!-- <button type="button" name=""  onclick={setTravelPrefer} if={user} hide={this.profileState==="setPreference"}>Set your travel preference</button> -->
-<profile if={use||this.state=="setProfile"} hide={this.state=="profileDone"}></profile>
+<profile if={use||this.state=="setProfile"} hide={profileState=="profileDone"}></profile>
 
 <journeys if={user} show={this.state=="newJourneys"}></journeys>
 <!-- <profilePrefer user={user} show={this.state==="setPreference"}></profilePrefer> -->
@@ -23,7 +22,8 @@
 
 
 <script>
-var tag=this
+var tag =this
+this.user=null
 this.userProfile = null
 this.state=null
 this.userEmail=null
@@ -31,21 +31,47 @@ this.startTime=""
 this.endTime=""
 this.destination=""
 this.profile=""
+var profileState=""
 var preference=[]
 var journeyRef=null
 let usersRef = database.collection('users');
 
    firebase.auth().onAuthStateChanged(userObj=> {
        console.log('userrrr',userObj)
+
    if (userObj) {
     // User is signed in.
        this.user=userObj;
        this.userEmail=this.user.email;
-       usersRef.doc(this.user.email).set({
-            userName:this.user.displayName,
-            userEmail:this.user.email
-       })
+       usersRef.doc(this.user.email).get().then(function(doc){
+           var data=doc.data()
+
+           if (!data.userAge){
+               console.log('no profile', data.userName)
+               profileState="createProfile";
+               tag.update()
+               usersRef.doc(userObj.email).set({
+                    userName:userObj.displayName,
+                    userEmail:userObj.email
+               })
+
+
+           } else{
+               profileState="profileDone"
+               console.log('have profile',data)
+           }
+            console.log('state',profileState)
+    })
+
     journeyRef=usersRef.doc(this.user.email).collection('destination')
+ //    usersRef.doc(this.user.email).get().then(function(doc){
+ //        if (!doc.userAge){
+ //            console.log('no profile')
+ //        } else{
+ //            this.profileState="profileDone"
+ //        }
+ // })
+    matchRef= journeyRef.doc('matchData')
     }
    // profile_picture : imageUrl
 
@@ -53,7 +79,7 @@ let usersRef = database.collection('users');
     // No user is signed in.
        this.user = null
    }
-    this.update();
+
 
    });
 
@@ -63,7 +89,7 @@ let usersRef = database.collection('users');
     })
 
 setJourneys(){
-    this.state="newJourneys"
+    this.journeyState="newJourneys"
     console.log('22',this.state)
 }
 
@@ -78,14 +104,15 @@ setProfile(){
        })
 
 observer.on('journey',journey=>{
-    console.log('journey',journey)
-    this.state="journeyDone";
+    this.journeyState="journeyDone";
     journeyRef.doc(this.destination).set({
            destination:journey.destination,
            startTime:journey.startTime,
            endTime:journey.endTime,
-           accomodation:journey.accomodation
+           accomodation:journey.accomodation,
+           transportation:profile.transportation
        })
+       console.log('journey',this.journeyState)
        var preference=[journey.firstPrefer,journey.secondPrefer,journey.thirdPrefer]
        console.log('pppp',preference)
     journeyRef.doc(this.destination).set({
@@ -95,7 +122,8 @@ observer.on('journey',journey=>{
 
    observer.on('profile',profile=>{
        console.log('this.profile',profile)
-       this.state="profileDone";
+       this.profileState="profileDone";
+       console.log('journey',this.profileState)
        usersRef.doc(this.user.email).set({
             userName:profile.userName,
             userAge:profile.age,
