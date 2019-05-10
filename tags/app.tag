@@ -2,7 +2,7 @@
 
 <navbar user={user}></navbar>
 <button type="button" name=""  onclick={setProfile} if={profileState==="createProfile"} hide={profileState==="profileDone"}>New user? create your profile</button>
-<button type="button" name=""  onclick={setJourneys} if={user&&profileState==="profileDone"} hide={this.journeyState==="newJourneys"}>Start a new journey?</button>
+<button type="button" name=""  onclick={setJourneys} if={profileState==="profileDone"} hide={this.journeyState==="newJourneys"}>Start a new journey?</button>
 
 <!-- <button type="button" name=""  onclick={setTravelPrefer} if={user} hide={this.profileState==="setPreference"}>Set your travel preference</button> -->
 <profile if={use||this.state=="setProfile"} hide={profileState=="profileDone"}></profile>
@@ -57,7 +57,7 @@ let usersRef = database.collection('users');
 
 
            } else{
-               profileState="profileDone"
+               that.profileState="profileDone"
                console.log('have profile',data)
            }
            console.log('state',that.profileState)
@@ -110,7 +110,7 @@ observer.on('journey',journey=>{
            startTime:journey.startTime,
            endTime:journey.endTime,
            accomodation:journey.accomodation,
-           transportation:profile.transportation
+           transportation:journey.transportation
        })
        console.log('journey',this.journeyState)
        var preference=[journey.firstPrefer,journey.secondPrefer,journey.thirdPrefer]
