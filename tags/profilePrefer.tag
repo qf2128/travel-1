@@ -1,4 +1,4 @@
-<profilePrefer>
+<!-- <profilePrefer>
     <select value="first" onchange={firstPreferSet}>
       <option value="gender">---</option>
       <option value="gender">gender</option>
@@ -41,20 +41,20 @@
 
 <script>
 travelPrefer=[]
-// console.log('that',this.userEmail)
-//  let usersRef = database.collection('users');
-//
+console.log('that',this.userEmail)
+ let usersRef = database.collection('users');
+
  firstPreferSet(){
 this.firstPrefer=event.target.value
-// console.log('this.firstPrefer',this.firstPrefer)
+console.log('this.firstPrefer',this.firstPrefer)
 travelPrefer.push(this.firstPrefer)
-//  usersRef.doc(this.userEmail).update(travelPrefer)
+ usersRef.doc(this.userEmail).update(travelPrefer)
  }
 
- // this.on('update', () => {
- //     this.user = opts.user;
- //     console.log('this.pppp',this.user);
- // });
+ this.on('update', () => {
+     this.user = opts.user;
+     console.log('this.pppp',this.user);
+ });
 
   secondPreferSet(){
       this.secondPrefer=event.target.value
@@ -74,4 +74,4 @@ travelPrefer.push(this.firstPrefer)
 </script>
 
 
-</profilePrefer>
+</profilePrefer> -->

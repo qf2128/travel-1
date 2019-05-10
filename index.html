@@ -15,7 +15,8 @@
     <!-- TAGS -->
 <script src="./tags/app.tag" type="riot/tag"></script>
 <script src="./tags/navbar.tag" type="riot/tag"></script>
-<script src="./tags/profilePrefer.tag" type="riot/tag"></script>
+<script src="./tags/profile.tag" type="riot/tag"></script>
+<script src="./tags/journeys.tag" type="riot/tag"></script>
 
 
 
@@ -40,6 +41,8 @@
 
 			let database = firebase.firestore();
 			let observer = riot.observable();
+            let storageRef = firebase.storage().ref();
+
 
       // INITIALIZE RIOT
       riot.mount('*');
