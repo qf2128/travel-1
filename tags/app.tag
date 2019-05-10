@@ -1,13 +1,13 @@
 <app>
 
 <navbar user={user}></navbar>
-<button type="button" name=""  onclick={setProfile} if={profileState==="createProfile"}>New user? create your profile</button>
+<button type="button" name=""  onclick={setProfile} if={profileState==="createProfile"} hide={profileState==="profileDone"}>New user? create your profile</button>
 <button type="button" name=""  onclick={setJourneys} if={user&&profileState==="profileDone"} hide={this.journeyState==="newJourneys"}>Start a new journey?</button>
 
 <!-- <button type="button" name=""  onclick={setTravelPrefer} if={user} hide={this.profileState==="setPreference"}>Set your travel preference</button> -->
 <profile if={use||this.state=="setProfile"} hide={profileState=="profileDone"}></profile>
 
-<journeys if={user} show={this.state=="newJourneys"}></journeys>
+<journeys if={user} show={this.journeyState=="newJourneys"}></journeys>
 <!-- <profilePrefer user={user} show={this.state==="setPreference"}></profilePrefer> -->
 
 <div class="container">
@@ -22,7 +22,7 @@
 
 
 <script>
-var tag =this
+var that=this
 this.user=null
 this.userProfile = null
 this.state=null
@@ -30,8 +30,8 @@ this.userEmail=null
 this.startTime=""
 this.endTime=""
 this.destination=""
+that.profileState=""
 this.profile=""
-var profileState=""
 var preference=[]
 var journeyRef=null
 let usersRef = database.collection('users');
@@ -47,9 +47,9 @@ let usersRef = database.collection('users');
            var data=doc.data()
 
            if (!data.userAge){
-               console.log('no profile', data.userName)
-               profileState="createProfile";
-               tag.update()
+               console.log('no profile',data)
+               that.profileState="createProfile";
+
                usersRef.doc(userObj.email).set({
                     userName:userObj.displayName,
                     userEmail:userObj.email
@@ -60,9 +60,9 @@ let usersRef = database.collection('users');
                profileState="profileDone"
                console.log('have profile',data)
            }
-            console.log('state',profileState)
+           console.log('state',that.profileState)
+           that.update()
     })
-
     journeyRef=usersRef.doc(this.user.email).collection('destination')
  //    usersRef.doc(this.user.email).get().then(function(doc){
  //        if (!doc.userAge){
@@ -123,6 +123,7 @@ observer.on('journey',journey=>{
    observer.on('profile',profile=>{
        console.log('this.profile',profile)
        this.profileState="profileDone";
+       that.update()
        console.log('journey',this.profileState)
        usersRef.doc(this.user.email).set({
             userName:profile.userName,
