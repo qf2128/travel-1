@@ -2,13 +2,13 @@
 
 <navbar user={user}></navbar>
 <button type="button" name=""  onclick={setProfile} if={profileState==="createProfile"} hide={profileState==="profileDone"}>New user? create your profile</button>
-<button type="button" name=""  onclick={setJourneys} if={profileState==="profileDone"} hide={this.journeyState==="newJourneys"||this.journeyState==="journeyDone"}>Start a new journey?</button>
-<button type="button" name=""  onclick={startMatch} if={this.journeyState==="journeyDone"} hide={this.state==="startMatch"}>Start match?</button>
+<button type="button" name=""  onclick={setJourneys} if={profileState==="profileDone"} hide={this.journeyState==="newJourneys"}>Start a new journey?</button>
+<button type="button" name=""  onclick={startMatch} if={user||this.journeyState==="journeyDone"} hide={this.state==="startMatch"}>Start match?</button>
 <!-- <button type="button" name=""  onclick={setTravelPrefer} if={user} hide={this.profileState==="setPreference"}>Set your travel preference</button> -->
 <profile if={use||this.state=="setProfile"} hide={profileState==="profileDone"}></profile>
 
 <journeys if={user} show={this.journeyState==="newJourneys"}></journeys>
-<matchDesti if={this.state="startMatch"} userEmail={userEmail}></matchDesti>
+<matchDesti show={user&&this.state==="startMatch"} user={user} userEmail={userEmail}></matchDesti>
 <!-- <profilePrefer user={user} show={this.state==="setPreference"}></profilePrefer> -->
 
 <div class="container">
@@ -111,8 +111,8 @@ observer.on('journey',journey=>{
     that.update()
     destinationRef=database.collection('destinations').doc(journey.destination)
     destinationRef.set({
-        userEmail:this.user.email
-    },{merge:true})
+        userEmail:firebase.firestore.FieldValue.arrayUnion(this.user.email)
+    }, {merge:true})
 
 
     journeyRef.doc(this.destination).set({
@@ -122,6 +122,7 @@ observer.on('journey',journey=>{
            accomodation:journey.accomodation,
            transportation:journey.transportation
        })
+
        console.log('journey',this.journeyState)
        var preference=[journey.firstPrefer,journey.secondPrefer,journey.thirdPrefer]
        console.log('pppp',preference)

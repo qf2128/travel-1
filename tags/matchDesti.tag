@@ -1,22 +1,24 @@
 <matchDesti>
-    <label for="destination">which journey</label>
-    <select value="destination" onchange={destinationForMatch}>
+    <label for="destination" if={user}>which journey</label>
+    <select value="destination" onchange={startMatch}>
         <option value="">---</option>
         <option value={item} each={item,i in destination}>{item}</option>
     </select>
-<p>mathc</p>
+
 <script>
 var that=this
-this.userEmail=""
+that.userEmail=null
 that.destination=[]
+that.userData=null
 var destinationMatch=null
 var usersRef=null
 var userMatchDestination=[]
-observer.on('userEmail',userEmail=>{
-    this.userEmail=userEmail
-    console.log('222',this.userEmail)
 
-    usersRef = database.collection('users').doc(this.userEmail);
+observer.on('userEmail',userEmail=>{
+    that.userEmail=userEmail
+    console.log('33333',that.userEmail)
+
+    usersRef = database.collection('users').doc(that.userEmail);
     usersRef.collection("destination").get().then(function(querySnapshot){
     querySnapshot.forEach(function(doc){
     that.destination.push(doc.id)
@@ -29,18 +31,61 @@ observer.on('userEmail',userEmail=>{
       })
 })
 
-destinationForMatch(){
+observer.on('destination',destination=>{
+    var lengthDesti=that.destination.length
+    var newDesti=null
+        for (i=0;i<lengthDesti;i++){
+            if(destination==that.destination[i]){
+               return
+            } else {
+               newDesti=destination
+            }
+        }
+        that.destination.push(newDesti)
+    })
+
+
+
+startMatch(){
+    // filter destination
     destinationMatch=event.target.value
     let destinationRef=database.collection('destinations').doc(destinationMatch)
     destinationRef.onSnapshot(function(doc){
         var data=doc.data()
-    userMatchDestination.push(data.userEmail)
+    userMatchDestination=data.userEmail
     console.log('userMatchDestination',userMatchDestination)
     that.update()
 
-    })
-    observer.trigger('matchEmail',userMatchDestination)
+//get user progile
+let userRef=database.collection('users').doc(that.userEmail)
+   usersRef.collection('destination').doc(destinationMatch).onSnapshot(function(doc){
+       that.userData=doc.data()
+       console.log('tttt',that.userData)
+   })
+
+
+    for (var key in userMatchDestination){
+        if (userMatchDestination[key]!=that.userEmail){
+            var userMatchEmail=userMatchDestination[key]
+            console.log('MMMMM',userMatchEmail)
+        let usersMatchRef=database.collection('users').doc(userMatchEmail)
+        usersMatchRef.collection('destination').doc(destinationMatch).onSnapshot(function(doc){
+            var matchData=doc.data()
+            console.log('dddd',matchData)
+        })
+
+
+
     }
+}
+})
+}
+
+    this.on('update', () => {
+        this.user = opts.user
+    })
+
+
 
 </script>
 
