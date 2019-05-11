@@ -31,7 +31,7 @@
           <option>Taurusn</option>
           <option>Gemini</option>
           <option>Cancer</option>
-          <option>leo</option>
+          <option>Leo</option>
           <option>Virgo</option>
           <option>Libra</option>
           <option>Scorpio</option>
