@@ -1,12 +1,12 @@
 <navbar>
   <!-- HTML -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-light bg-light">
 	<div class="buttonPosition">
 <button   class="btn  my-2 my-sm-0" type="button" onclick={ Profile }>Profile</button>
 <button  class="btn  my-2 my-sm-0" type="button" onclick={ About }>About</button>
 		</div>
-	  <div class="navbar-toggler" id="navbarSupportedContent">
-	    <ul class="navbar-nav mr-auto">
+	  <div id="navbarSupportedContent">
+	    <ul class="  mr-auto">
 	    </ul>
 	    <div class="form-inline my-2 my-lg-0">
 				<span if={ user } class="navbar-text mr-3">{ user.displayName }</span>
@@ -40,11 +40,8 @@
 
   <style>
     /* CSS */
-    :scope {}
-    .special {
-      background-color: #333333;
-      color: #FFFFFF;
-    }
+
+
 	.buttonPosition {
     position:absolute;
 		right: 16px;
