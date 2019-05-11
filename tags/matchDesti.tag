@@ -10,10 +10,14 @@ var that=this
 that.userEmail=null
 that.destination=[]
 that.userData=null
+that.startTime=null
+that.endTime=null
 var destinationMatch=null
 var usersRef=null
 var userMatchDestination=[]
-
+var timeMatchEmail=[]
+var userMatchEmail=null
+that.userMatchEmailNew=null
 observer.on('userEmail',userEmail=>{
     that.userEmail=userEmail
     console.log('33333',that.userEmail)
@@ -61,17 +65,36 @@ let userRef=database.collection('users').doc(that.userEmail)
    usersRef.collection('destination').doc(destinationMatch).onSnapshot(function(doc){
        that.userData=doc.data()
        console.log('tttt',that.userData)
+       that.startTime=that.userData.startTime
+       that.endTime=that.userData.endTime
+       console.log('new',that.userMatchEmailNew)
    })
+
 
 
     for (var key in userMatchDestination){
         if (userMatchDestination[key]!=that.userEmail){
-            var userMatchEmail=userMatchDestination[key]
+            userMatchEmail=userMatchDestination[key]
             console.log('MMMMM',userMatchEmail)
-        let usersMatchRef=database.collection('users').doc(userMatchEmail)
+            that.userMatchEmailNew=userMatchEmail
+
+        let usersMatchRef=database.collection('users').doc(userMatchDestination[key])
         usersMatchRef.collection('destination').doc(destinationMatch).onSnapshot(function(doc){
+            console.log('dddd',userMatchDestination[key])
             var matchData=doc.data()
-            console.log('dddd',matchData)
+            var matchStartTime=matchData.startTime
+            var matchEndTime=matchData.endTime
+
+            console.log('new',matchStartTime,that.endTime)
+
+            if (matchStartTime<=that.endTime&&matchEndTime>=that.startTime){
+                console.log('userMatchEmail',userMatchDestination[key])
+                timeMatchEmail.push(userMatchEmail)
+
+            } else{
+                console.log('false')
+            }
+
         })
 
 
