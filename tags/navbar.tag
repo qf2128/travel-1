@@ -1,12 +1,12 @@
 <navbar>
   <!-- HTML -->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	    <span class="navbar-toggler-icon"></span>
-	  </button>
-
-	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-	    <ul class="navbar-nav mr-auto">
+<nav class="navbar navbar-light bg-light">
+	<div class="buttonPosition">
+<button   class="btn  my-2 my-sm-0" type="button" onclick={ Profile }>Profile</button>
+<button  class="btn  my-2 my-sm-0" type="button" onclick={ About }>About</button>
+		</div>
+	  <div id="navbarSupportedContent">
+	    <ul class="  mr-auto">
 	    </ul>
 	    <div class="form-inline my-2 my-lg-0">
 				<span if={ user } class="navbar-text mr-3">{ user.displayName }</span>
@@ -14,6 +14,8 @@
 				<button show={ user } class="btn btn-outline-danger my-2 my-sm-0" type="button" onclick={ logout }>Logout</button>
 	    </div>
     </div>
+
+
 
 
   <script>
@@ -38,10 +40,12 @@
 
   <style>
     /* CSS */
-    :scope {}
-    .special {
-      background-color: #333333;
-      color: #FFFFFF;
-    }
+
+
+	.buttonPosition {
+    position:absolute;
+		right: 16px;
+	}
+
   </style>
 </navbar>
