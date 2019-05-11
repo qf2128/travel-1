@@ -31,7 +31,6 @@
 
         this.on('update', () => {
             this.user = opts.user;
-            this.room = opts.room;
             console.log('this.onnnn',this.user);
         });
 
