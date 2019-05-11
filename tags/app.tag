@@ -7,7 +7,7 @@
 <!-- <button type="button" name=""  onclick={setTravelPrefer} if={user} hide={this.profileState==="setPreference"}>Set your travel preference</button> -->
 <profile if={use||this.state=="setProfile"} hide={profileState==="profileDone"}></profile>
 
-<journeys if={user} show={this.journeyState==="newJourneys"}></journeys>
+<journeys if={user} show={this.journeyState==="newJourneys"} userEmail={this.user.email}></journeys>
 <matchDesti show={user&&this.state==="startMatch"} user={user} userEmail={userEmail}></matchDesti>
 <!-- <profilePrefer user={user} show={this.state==="setPreference"}></profilePrefer> -->
 
@@ -120,10 +120,11 @@ observer.on('journey',journey=>{
            startTime:journey.startTime,
            endTime:journey.endTime,
            accomodation:journey.accomodation,
-           transportation:journey.transportation
+           transportation:journey.transportation,
+           userEmail:journey.userEmail
        })
 
-       console.log('journey',this.journeyState)
+       console.log('journey',journey)
        var preference=[journey.firstPrefer,journey.secondPrefer,journey.thirdPrefer]
        console.log('pppp',preference)
        journeyRef.doc(this.destination).set({

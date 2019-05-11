@@ -14,7 +14,7 @@ that.startTime=null
 that.endTime=null
 var destinationMatch=null
 var usersRef=null
-var userMatchDestination=[]
+var userMatchDestination=null
 var timeMatchEmail=[]
 var userMatchEmail=null
 that.userMatchEmailNew=null
@@ -35,6 +35,8 @@ observer.on('userEmail',userEmail=>{
       })
 })
 
+
+
 observer.on('destination',destination=>{
     var lengthDesti=that.destination.length
     var newDesti=null
@@ -51,8 +53,16 @@ observer.on('destination',destination=>{
 
 
 startMatch(){
-    // filter destination
     destinationMatch=event.target.value
+// get user  Profile
+    let userRef=database.collection('users').doc(that.userEmail)
+       usersRef.collection('destination').doc(destinationMatch).onSnapshot(function(doc){
+           that.userData=doc.data()
+           console.log('tttt',that.userData)
+           that.startTime=that.userData.startTime
+           that.endTime=that.userData.endTime
+       })
+     // filter destination
     let destinationRef=database.collection('destinations').doc(destinationMatch)
     destinationRef.onSnapshot(function(doc){
         var data=doc.data()
@@ -60,41 +70,26 @@ startMatch(){
     console.log('userMatchDestination',userMatchDestination)
     that.update()
 
-//get user progile
-let userRef=database.collection('users').doc(that.userEmail)
-   usersRef.collection('destination').doc(destinationMatch).onSnapshot(function(doc){
-       that.userData=doc.data()
-       console.log('tttt',that.userData)
-       that.startTime=that.userData.startTime
-       that.endTime=that.userData.endTime
-       console.log('new',that.userMatchEmailNew)
-   })
-
-
 
     for (var key in userMatchDestination){
         if (userMatchDestination[key]!=that.userEmail){
-            userMatchEmail=userMatchDestination[key]
-            console.log('MMMMM',userMatchEmail)
-            that.userMatchEmailNew=userMatchEmail
-
+         console.log('111------',userMatchDestination[key])
         let usersMatchRef=database.collection('users').doc(userMatchDestination[key])
         usersMatchRef.collection('destination').doc(destinationMatch).onSnapshot(function(doc){
-            console.log('dddd',userMatchDestination[key])
+            userMatchEmail=userMatchDestination[key]
+            console.log('MMMMM',userMatchEmail)
             var matchData=doc.data()
-            var matchStartTime=matchData.startTime
+            var matchStartTime=doc.data().startTime
             var matchEndTime=matchData.endTime
-
-            console.log('new',matchStartTime,that.endTime)
-
+            that.userMatchEmailNew=matchData.userEmail
+            console.log('12',doc.data())
             if (matchStartTime<=that.endTime&&matchEndTime>=that.startTime){
-                console.log('userMatchEmail',userMatchDestination[key])
-                timeMatchEmail.push(userMatchEmail)
+                timeMatchEmail.push(matchData.userEmail)
 
             } else{
                 console.log('false')
             }
-
+             console.log('timeMatchEmail',timeMatchEmail)
         })
 
 

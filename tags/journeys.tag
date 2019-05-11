@@ -175,8 +175,10 @@ Question1: Destination of your new Journey
                        firstPrefer:firstPrefer,
                        secondPrefer:secondPrefer,
                        thirdPrefer:thirdPrefer,
-                       transportation:transportation
+                       transportation:transportation,
+                       userEmail:opts.useremail
                    }
+                  
                 observer.trigger('journey',journey)
           }
 
