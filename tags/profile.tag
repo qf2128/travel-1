@@ -72,7 +72,7 @@ console.log('event',portraitFile);
      var file=event.target.files[0];
      var portraitURL=portraitFile.value
      //create a storage usersRef
-
+ }
 
 this.state="";
 // get elements
@@ -111,7 +111,8 @@ var portraitFile = document.getElementById('portraitFile');
 //     )
 //     }
 
-submitProfile(){
+submitProfile() {
+
     var userName=document.getElementById('username').value;
     var age=document.getElementById('age').value;
     var gender=document.getElementById('gender').value;
@@ -126,8 +127,8 @@ submitProfile(){
              portrait:portraitURL}
     console.log('profile',profile)
     observer.trigger('profile',profile)
-}
 
+}
 
 
 

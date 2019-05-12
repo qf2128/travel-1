@@ -12,12 +12,9 @@ var that=this;
 that.userEmail=null;
 that.destination=[];
 that.userData=null;
-var userGender="";
-var userZodiac="";
 var userAccommodation=""
 var userPreferredGender=""
 var userPreferredZodiac=""
-that.userProfileData=null;
 that.startTime=null;
 that.endTime=null;
 that.destinationMatch=null;
@@ -70,18 +67,12 @@ observer.on('destination',destination=>{
 
 
 startMatch(){
-    console.log('here')
+      console.log('here')
 
-    that.destinationMatch=event.target.value
+      that.destinationMatch=event.target.value
 
-// get user  Profile
-
-       usersRef.get().then(function(doc){
-           that.userProfileData=doc.data();
-           userGender=that.userProfileData.userGender;
-           userZodiac=that.userProfileData.userZodiac;
-       })
-       usersRef.collection('destination').doc(that.destinationMatch).get().then(function(doc){
+      //  get user profile
+      usersRef.collection('destination').doc(that.destinationMatch).get().then(function(doc){
            that.userData=doc.data()
            var userJourneyData=that.userData;
            userAccommodation=that.userData.accommodation;
@@ -97,149 +88,121 @@ startMatch(){
        })
 
 
-     // filter destination
-    let destinationRef=database.collection('destinations').doc(that.destinationMatch)
-    destinationRef.get().then(function(doc){
-        var data=doc.data()
-    userMatchDestination=data.userEmail
-    that.update()
+     // get users with same destination
+     let destinationRef=database.collection('destinations').doc(that.destinationMatch)
+     destinationRef.get().then(function(doc){
+          var data=doc.data()
+          userMatchDestination=data.userEmail
+     })
+     // search usersMatch profile by loop
+        for (var key in userMatchDestination){
+           let usersMatchRef=database.collection('users').doc(userMatchDestination[key])
+
+           // get matchUsers' time, accommodation, transportation
+           usersMatchRef.collection('destination').doc(that.destinationMatch).get().then(function(doc){
+              userMatchEmail=userMatchDestination[key];
+              var matchData=doc.data();
+              userMatchAccommodation=matchData.accommodation;
+              userMatchTransportation=matchData.transportation;
+              let matchEndTime=matchData.endTime;
+              let matchStartTime=matchData.startTime;
+              that.userMatchEmailNew = matchData.userEmail
+
+              // filter time
+              if (matchStartTime <= that.endTime && matchEndTime >= that.startTime) {
+                   that.timeMatchEmail.push(that.userMatchEmailNew)
+                   console.log('heretimeMatchEmail',that.timeMatchEmail)
+               } else{
+                   console.log('false')
+               }
+              // get users' profile: gender, zodiac
+              let timeMatchRef=usersRef.collection('destination').doc(that.destinationMatch).collection('timeMatchEmail')
+              if (userMatchDestination[key]!=that.userEmail){
+                 usersMatchRef.get().then(function(doc){
+                    that.matchProfileData=doc.data();
+                    matchGender=that.matchProfileData.userGender;
+                    matchZodiac=that.matchProfileData.userZodiac;
+              })
 
 
-    for (var key in userMatchDestination){
-        var score=0;
-        let usersMatchRef=database.collection('users').doc(userMatchDestination[key])
-
-        usersMatchRef.collection('destination').doc(destinationMatch).onSnapshot(function(doc){
-            userMatchEmail=userMatchDestination[key]
-            console.log('MMMMM',userMatchEmail)
-            var matchData=doc.data()
-            var matchEndTime=matchData.endTime
-            var matchStartTime=matchData.startTime
-             console.log('matchEndTime',matchData.endTime)
-            that.userMatchEmailNew=matchData.userEmail
-            console.log('12',doc.data())
-            if (matchStartTime<=that.endTime&&matchEndTime>=that.startTime){
-                timeMatchEmail.push(matchData.userEmail)
-
-            } else{
-                console.log('false')
-
-        debugger;
-        let timeMatchRef=usersRef.collection('destination').doc(that.destinationMatch).collection('timeMatchEmail')
-        if (userMatchDestination[key]!=that.userEmail){
-            usersMatchRef.get().then(function(doc){
-                that.matchProfileData=doc.data();
-                 matchGender=that.matchProfileData.userGender;
-                 matchZodiac=that.matchProfileData.userZodiac;
-            })
-
-            usersMatchRef.collection('destination').doc(that.destinationMatch).get().then(function(doc){
-            userMatchEmail=userMatchDestination[key];
-            var matchData=doc.data();
-            userMatchAccommodation=matchData.accommodation;
-            userMatchTransportation=matchData.transportation;
-            let matchEndTime=matchData.endTime;
-            let matchStartTime=matchData.startTime;
-            that.userMatchEmailNew = matchData.userEmail
-            if (matchStartTime <= that.endTime && matchEndTime >= that.startTime) {
-                that.timeMatchEmail.push(that.userMatchEmailNew)
-                console.log('heretimeMatchEmail',that.timeMatchEmail)
-
-                //  score for gender
-                if (userPreferredGender == matchGender){
-                    if (preference[0] == "gender"){
+                 //  score for gender
+                 if (userPreferredGender == matchGender){
+                     if (preference[0] == "gender"){
                         genderScore=30
-                    } else if (preference[1] == "gender"){
+                     } else if (preference[1] == "gender"){
                         genderScore=25
-                    } else if (preference[2] == "gender"){
-                        genderScore = 20
-                    } else {
+                     } else if (preference[2] == "gender"){
+                         genderScore = 20
+                     } else {
                         genderScore = 10
-                    }
+                     }
                  } else {
-                    genderScore=0
-                  }
-                  console.log('score',genderScore)
-                  timeMatchRef.doc(that.userMatchEmailNew).set({
-                     genderScore:genderScore,
-                  },{merge:true})
+                     genderScore=0
+                   }
+                 timeMatchRef.doc(that.userMatchEmailNew).set({
+                     genderScore:genderScore},{merge:true})
 
                   // score for zodiac
-                  if (userPreferredZodiac == matchZodiac){
-                      if (preference[0] == "zodiac"){
-                          zodiacScore = 30
-                      } else if (preference[1] == "zodiac"){
-                          zodiacScore = 25
-                      } else if (preference[2] == "zodiac"){
-                          zodiacScore = 20
-                      } else{
-                          zodiacScore = 10
-                      }
-                   } else {
-                      zodiacScore = 0
-                    }
-                    console.log('score',zodiacScore)
-                    timeMatchRef.doc(that.userMatchEmailNew).set({
-                       zodiacScore:zodiacScore,
-                   },{merge:true})
+
+                 if (userPreferredZodiac == matchZodiac){
+                     if (preference[0] == "zodiac"){
+                      zodiacScore = 30
+                     } else if (preference[1] == "zodiac"){
+                      zodiacScore = 25
+                     } else if (preference[2] == "zodiac"){
+                      zodiacScore = 20
+                     } else{
+                      zodiacScore = 10
+                     }
+                 } else {
+                     zodiacScore = 0
+                   }
+                 timeMatchRef.doc(that.userMatchEmailNew).set({
+                     zodiacScore:zodiacScore},{merge:true})
 
                    // score for transportation
-                   if (userTransportation == userMatchTransportation){
-                       if (preference[0] == "transportation"){
-                           transportaionScore = 30
-                       } else if (preference[1] == "transportation"){
-                           transportaionScore = 25
-                       } else if (preference[2] == "transportation"){
-                           transportaionScore = 20
-                       } else {
-                           transportaionScore = 10
-                       }
-                    } else {
-                           transportaionScore = 0
-                     }
-                     console.log('score',transportaionScore)
-                     timeMatchRef.doc(that.userMatchEmailNew).set({
-                        transportaionScore:transportaionScore,
-                    },{merge:true})
 
-                    // score for accommodation
-                    if (userAccommodation == userMatchAccommodation){
-                        if (preference[0] == "accommodation"){
-                            accommodationScore = 30
-                        } else if (preference[1] == "accommodation"){
-                            accommodationScore = 25
-                        } else if (preference[2] == "accommodation"){
-                            accommodationScore = 20
+                 if (userTransportation == userMatchTransportation){
+                     if (preference[0] == "transportation"){
+                        transportaionScore = 30
+                        } else if (preference[1] == "transportation"){
+                        transportaionScore = 25
+                        } else if (preference[2] == "transportation"){
+                         transportaionScore = 20
                         } else {
-                            accommodationScore = 10
+                         transportaionScore = 10
                         }
-                     } else {
-                            accommodationScore = 0
-                      }
-                      console.log('score',accommodationScore)
-                      timeMatchRef.doc(that.userMatchEmailNew).set({
-                         accommodationScore:accommodationScore,
-                     },{merge:true})
+                  } else {
+                       transportaionScore = 0
+                  }
+                 timeMatchRef.doc(that.userMatchEmailNew).set({
+                     transportaionScore:transportaionScore},{merge:true})
 
-                }
+                // score for accommodation
+                 if (userAccommodation == userMatchAccommodation){
+                    if (preference[0] == "accommodation"){
+                        accommodationScore = 30
+                        } else if (preference[1] == "accommodation"){
+                        accommodationScore = 25
+                        } else if (preference[2] == "accommodation"){
+                        accommodationScore = 20
+                        } else {
+                        accommodationScore = 10
+                        }
+                    } else {
+                        accommodationScore = 0
+                    }
+                 timeMatchRef.doc(that.userMatchEmailNew).set({
+                      accommodationScore:accommodationScore},{merge:true})
 
-
-            //  upload timeMatchEmail
-
-                var timeMatchEmailAll=that.timeMatchEmail;
-                observer.trigger('timeMatchEmailAll',timeMatchEmailAll)
-            that.update();
-             })
+                   that.update();
+            }
+         })
              // }
          }
             // console.log('timeMatchEmail',that.timeMatchEmail)
 
-            }
-
-    })
-
-}
-
+     }
 
 
     // for (key in that.preference){
