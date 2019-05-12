@@ -62,42 +62,36 @@ Question1: Destination of your new Journey
 <select value="first" onchange={firstPreferSet}>
   <option value="">---</option>
   <option value="gender"> travel buddy's gender</option>
-  <option value="starSign">travel buddy's star sign</option>
+  <option value="zodiac">travel buddy's zodiac</option>
   <option value="ages">travel buddy's ages</option>
-  <option value="accomodationExpense">accomodation expense</option>
-  <option value="foodExpense">food expense</option>
+  <option value="accommodationExpense">accommodation expense</option>
   <option value="transportation">transportation</option>
-  <option value="timeSchedule">time schedule</option>
   <option value="travelType">travel type (casual/planned)</option>
 </select>
    <br>The Second:
 <select value="second" onchange={secondPreferSet}>
     <option value="">---</option>
-    <option value="gender">gender</option>
-    <option value="starSign">star sign</option>
-    <option value="ages">ages</option>
-    <option value="accomodationExpense">accomodation expense</option>
-    <option value="foodExpense">food expense</option>
+    <option value="gender">travel buddy's gender</option>
+    <option value="zodiac">travel buddy's zodiac</option>
+    <option value="ages">travel buddy's ages</option>
+    <option value="accommodationExpense">accommodation expense</option>
     <option value="transportation">transportation</option>
-    <option value="timeSchedule">time schedule</option>
     <option value="travelType">travel type (casual/planned)</option>
 </select>
    <br>The Third:
 <select value="third" onchange={thirdPreferSet}>
     <option value="">---</option>
     <option value="gender">gender</option>
-    <option value="starSign">star sign</option>
+    <option value="zodiac">zodiac</option>
     <option value="ages">ages</option>
-    <option value="accomodationExpense">accomodation expense</option>
-    <option value="foodExpense">food expense</option>
+    <option value="accommodationExpense">accommodation expense</option>
     <option value="transportation">transportation</option>
-    <option value="timeSchedule">time schedule</option>
     <option value="travelType">travel type (casual/planned)</option>
 </select>
 </div>
 
 <div>
-<p> Question4: Choose a star rating of accomodation </p>
+<p> Question4: Choose a star rating of accommodation </p>
 <button type="button" class="btn btn-outline-dark" id="button1">1 star</button>
 <button type="button" class="btn btn-outline-dark" id="button1"> 2 star </button>
 <button type="button" class="btn btn-outline-dark" id="button1"> 3 star </button>
@@ -112,6 +106,36 @@ Question1: Destination of your new Journey
   <button type="button" class="btn btn-outline-dark" id="button2"> Uber/Taxi </button>
   </div>
 
+  <div>
+  <p> Question6: What's your preferred gender of your potential boddy<id="button2"p> <br>
+      <select class="form-control" id="gender" onchange={prefferedGender}>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Gay">Gay</option>
+        <option value="Lesbian">Lesbian</option>
+        <option value="Bisexual">Bisexual</option>
+        <option value="Transgender">Transgender</option>
+      </select>
+  </div>
+  <div class="">
+        <p> Question6: What's your preferred gender of your potential boddy<id="button2"p>
+            <select class="form-control" id="zodiac" onchange={prefferedZodiac}>
+              <option value="Aquarius">Aquarius</option>
+              <option value="Pisces">Pisces</option>
+              <option value="Aries">Aries</option>
+              <option value="Taurusn">Taurusn</option>
+              <option value="Gemini">Gemini</option>
+              <option value="Cancer">Cancer</option>
+              <option value="leo">leo</option>
+              <option value="Virgo">Virgo</option>
+              <option value="Libra">Libra</option>
+              <option value="Scorpio">Scorpio</option>
+              <option value="Sagittarius">Sagittarius</option>
+              <option value="Capricorn">Capricorn</option>
+            </select>
+  </div>
+
+
 
 <button type="button" name="button" onclick={submitJourney}>Submit</button>
     <script>
@@ -120,11 +144,13 @@ Question1: Destination of your new Journey
     var time="";
     var startTime="";
     var endTime="";
-    var accomodation=""
+    var accommodation=""
     var firstPrefer=""
     var secondPrefer=""
     var thirdPrefer=""
     var transportation=""
+    var prefferedGender=""
+    var prefferedZodiac=""
         submitDestination(){
             destination=event.target.value
             observer.trigger('destination',destination)
@@ -136,12 +162,12 @@ Question1: Destination of your new Journey
         // }
          submitStartTime(){
              startTime=event.target.value
-             // observer.trigger('startTime',startTime)
+             //
              // console.log(startTime)
          }
          submitEndTime(){
              endTime=event.target.value
-             // observer.trigger('endTime',endTime)
+             //observer.trigger('endTime',endTime)
              // console.log(endTime)
          }
          firstPreferSet(){
@@ -156,10 +182,17 @@ Question1: Destination of your new Journey
              thirdPrefer=event.target.value
              // console.log('thirdPrefer',thirdPrefer)
          }
+         prefferedGender(){
+            prefferedGender=event.target.value
+         }
+         prefferedZodiac(){
+             prefferedZodiac=event.target.value
+         }
+
           document.body.addEventListener("click", event => {
               if (event.target.id == "button1") {
                 console.log("Clicked", event.target.textContent);
-                accomodation=event.target.textContent
+                accommodation=event.target.textContent
             } else if (event.target.id == "button2"){
                 console.log("Clicked", event.target.textContent);
                 transportation=event.target.textContent
@@ -168,17 +201,21 @@ Question1: Destination of your new Journey
             });
 
           submitJourney(){
+              console.log('2--------',opts)
               journey={destination:destination,
                        startTime:startTime,
                        endTime:endTime,
-                       accomodation:accomodation,
+                       accommodation:accommodation,
                        firstPrefer:firstPrefer,
                        secondPrefer:secondPrefer,
                        thirdPrefer:thirdPrefer,
                        transportation:transportation,
-                       userEmail:opts.useremail
+                       userEmail:opts.useremail,
+                       prefferedGender:prefferedGender,
+                       prefferedZodiac:prefferedZodiac,
+
                    }
-                  
+
                 observer.trigger('journey',journey)
           }
 

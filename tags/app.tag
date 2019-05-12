@@ -10,7 +10,7 @@
 <journeys if={user} show={this.journeyState==="newJourneys"} userEmail={this.user.email}></journeys>
 <matchDesti show={user&&this.state==="startMatch"} user={user} userEmail={userEmail}></matchDesti>
 <!-- <profilePrefer user={user} show={this.state==="setPreference"}></profilePrefer> -->
-
+<score></score>
 <div class="container">
     <div class="row">
         <div class="col">
@@ -114,14 +114,15 @@ observer.on('journey',journey=>{
         userEmail:firebase.firestore.FieldValue.arrayUnion(this.user.email)
     }, {merge:true})
 
-
     journeyRef.doc(this.destination).set({
            destination:journey.destination,
            startTime:journey.startTime,
            endTime:journey.endTime,
-           accomodation:journey.accomodation,
+           accommodation:journey.accommodation,
            transportation:journey.transportation,
-           userEmail:journey.userEmail
+           userEmail:journey.userEmail,
+           preferredGender:journey.prefferedGender,
+           preferredZodiac:journey.prefferedZodiac
        })
 
        console.log('journey',journey)
@@ -136,12 +137,11 @@ observer.on('journey',journey=>{
        console.log('this.profile',profile)
        this.profileState="profileDone";
        that.update()
-       console.log('journey',journey)
        usersRef.doc(this.user.email).set({
             userName:profile.userName,
             userAge:profile.age,
             userGender:profile.gender,
-            zodiac:profile.zodiac,
+            userZodiac:profile.zodiac,
             userPortrait:profile.portrait
        },
        {merge:true})
