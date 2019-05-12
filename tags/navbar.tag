@@ -2,8 +2,8 @@
   <!-- HTML -->
 <nav class="navbar navbar-light bg-light">
 	<div class="buttonPosition">
-<button   class="btn  my-2 my-sm-0" type="button" onclick={ Profile }>Profile</button>
-<button  class="btn  my-2 my-sm-0" type="button" onclick={ About }>About</button>
+<button class="btn  my-2 my-sm-0" type="button" onclick={ profile }>Profile</button>
+<button  class="btn  my-2 my-sm-0" type="button" onclick={ about }>About</button>
 		</div>
 	  <div id="navbarSupportedContent">
 	    <ul class="  mr-auto">
@@ -16,10 +16,55 @@
     </div>
 
 
-
-
   <script>
+  // this.state =null
+	// this.user=null
+	// var userEmail=""
   let usersRef = database.collection('users');
+	// firebase.auth().onAuthStateChanged(userObj=> {
+	// 		console.log('userrrr',userObj)
+  var pageState=""
+
+
+			//
+			// Profile(){
+			// 	   if (userObj) {
+			// 	    // User is signed in.
+			// 	       this.user=userObj;
+			// 	       userEmail=this.user.email;
+			// 	       observer.trigger('userEmail',userEmail)
+			// 	       usersRef.doc(this.user.email).get().then(function(doc){
+			// 	           var data=doc.data()
+			//
+			// 	           if (doc.exists){
+			// 	               console.log('have profile',data)
+			// 	               that.profileState="createProfile";
+			//
+			//
+			// 	           console.log('state',that.profileState)
+			// 	           that.update()
+			// 	    })
+			//
+			//
+	    // }
+
+
+
+  profile(){
+		 pageState="LookProfile";
+		 observer.trigger('PageState',pageState)
+	}
+
+about(){
+		 aboutState="aboutUs";
+		 observer.trigger('aboutState',aboutState)
+	}
+
+
+
+
+
+
 
 
 		login() {
@@ -35,6 +80,7 @@
             this.user = opts.user;
             console.log('this.onnnn',this.user);
         });
+
 
   </script>
 

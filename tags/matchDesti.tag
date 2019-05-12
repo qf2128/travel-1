@@ -108,6 +108,22 @@ startMatch(){
     for (var key in userMatchDestination){
         var score=0;
         let usersMatchRef=database.collection('users').doc(userMatchDestination[key])
+
+        usersMatchRef.collection('destination').doc(destinationMatch).onSnapshot(function(doc){
+            userMatchEmail=userMatchDestination[key]
+            console.log('MMMMM',userMatchEmail)
+            var matchData=doc.data()
+            var matchEndTime=matchData.endTime
+            var matchStartTime=matchData.startTime
+             console.log('matchEndTime',matchData.endTime)
+            that.userMatchEmailNew=matchData.userEmail
+            console.log('12',doc.data())
+            if (matchStartTime<=that.endTime&&matchEndTime>=that.startTime){
+                timeMatchEmail.push(matchData.userEmail)
+
+            } else{
+                console.log('false')
+
         debugger;
         let timeMatchRef=usersRef.collection('destination').doc(that.destinationMatch).collection('timeMatchEmail')
         if (userMatchDestination[key]!=that.userEmail){
@@ -217,6 +233,7 @@ startMatch(){
              // }
          }
             // console.log('timeMatchEmail',that.timeMatchEmail)
+
             }
 
     })
