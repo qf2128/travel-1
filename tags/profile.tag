@@ -31,7 +31,7 @@
           <option>Taurusn</option>
           <option>Gemini</option>
           <option>Cancer</option>
-          <option>Leo</option>
+          <option>leo</option>
           <option>Virgo</option>
           <option>Libra</option>
           <option>Scorpio</option>
@@ -51,8 +51,6 @@
           <div class="submit">
             <button type="button" class="btn btn-outline-secondary" onclick={submitProfile}>Submit</button>
 
-
-
       </div>
 
     </div>
@@ -60,6 +58,7 @@
 <script>
 var profile={};
 var portraitURL="";
+
       var storageRef=firebase.storage().ref('photos/'+file.name);
 // get elements
 var uploader=document.getElementById('uploader');
@@ -74,25 +73,43 @@ console.log('event',portraitFile);
      var portraitURL=portraitFile.value
      //create a storage usersRef
 
-//     //upload files
-    var task=storageRef.put(file);
+
+this.state="";
+// get elements
+var uploader=document.getElementById('uploader');
+var portraitFile = document.getElementById('portraitFile');
+// console.log('event',portraitFile);
 //
-     //upload progress bar
-    task.on('state_changed',
-          function progress(snapshot){
-             var percentage = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
-             uploader.value=percentage;
-         },
+// portraitFile.addEventListener('change',this.uploadFile);
+//     uploadFile (){
+//     console.log("event",portraitFile);
+//     //get portraitFile
+//     var file=event.target.files[0];
+//     // var portraitURL=portraitFile.value
+//
+//     //create a storage usersRef
+//     var storageRef=firebase.storage().ref('photos/'+file.name);
+//
 
-         function error(err){
-
-          },
-
-          function complete(){
-
-          }
-     )
-     }
+//     //upload files
+//     var task=storageRef.put(file);
+//
+//     //upload progress bar
+//     task.on('state_changed',
+//          function progress(snapshot){
+//              var percentage = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+//              uploader.value=percentage;
+//          },
+//
+//          function error(err){
+//
+//          },
+//
+//          function complete(){
+//
+//          }
+//     )
+//     }
 
 submitProfile(){
     var userName=document.getElementById('username').value;
@@ -109,7 +126,6 @@ submitProfile(){
              portrait:portraitURL}
     console.log('profile',profile)
     observer.trigger('profile',profile)
-
 }
 
 
