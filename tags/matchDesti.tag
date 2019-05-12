@@ -79,8 +79,9 @@ startMatch(){
             userMatchEmail=userMatchDestination[key]
             console.log('MMMMM',userMatchEmail)
             var matchData=doc.data()
-            var matchStartTime=doc.data().startTime
             var matchEndTime=matchData.endTime
+            var matchStartTime=matchData.startTime
+             console.log('matchEndTime',matchData.endTime)
             that.userMatchEmailNew=matchData.userEmail
             console.log('12',doc.data())
             if (matchStartTime<=that.endTime&&matchEndTime>=that.startTime){

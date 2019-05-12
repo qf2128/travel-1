@@ -1,15 +1,17 @@
 <app>
 
 <navbar user={user}></navbar>
-<button type="button" name=""  onclick={setProfile} if={profileState==="createProfile"} hide={profileState==="profileDone"}>New user? create your profile</button>
-<button type="button" name=""  onclick={setJourneys} if={profileState==="profileDone"} hide={this.journeyState==="newJourneys"}>Start a new journey?</button>
-<button type="button" name=""  onclick={startMatch} if={user||this.journeyState==="journeyDone"} hide={this.state==="startMatch"}>Start match?</button>
+<button type="button" name=""  onclick={setProfile} if={profileState==="createProfile"} hide={profileState==="profileDone"||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>New user? create your profile</button>
+<button type="button" name=""  onclick={setJourneys} if={profileState==="profileDone"} hide={this.journeyState==="newJourneys"||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>Start a new journey?</button>
+<button type="button" name=""  onclick={startMatch} if={user||this.journeyState==="journeyDone"} hide={this.state==="startMatch"||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>Start match?</button>
 <!-- <button type="button" name=""  onclick={setTravelPrefer} if={user} hide={this.profileState==="setPreference"}>Set your travel preference</button> -->
-<profile if={use||this.state=="setProfile"} hide={profileState==="profileDone"}></profile>
+<profile if={use||this.state==="setProfile"} hide={profileState==="profileDone"}></profile>
 
 <journeys if={user} show={this.journeyState==="newJourneys"} userEmail={this.user.email}></journeys>
 <matchDesti show={user&&this.state==="startMatch"} user={user} userEmail={userEmail}></matchDesti>
 <!-- <profilePrefer user={user} show={this.state==="setPreference"}></profilePrefer> -->
+<profilePage if={this.pageState==="LookProfile"}> </profilePage>
+<aboutPage if={this.aboutState==="aboutUs"}> </aboutPage>
 
 <div class="container">
     <div class="row">
@@ -33,6 +35,8 @@ this.endTime=""
 this.destination=""
 that.profileState=""
 this.profile=""
+this.pageState=null
+this.aboutState=null
 var destinationRef=null
 var preference=[]
 var journeyRef=null
@@ -91,6 +95,18 @@ let usersRef = database.collection('users');
     observer.on('userEntered',userProfile=>{
     })
 
+
+    observer.on('PageState',pageState=>{
+      this.pageState=pageState;
+      console.log('PageState',this.pageState)
+      that.update()
+    })
+
+    observer.on('aboutState',aboutState=>{
+      this.aboutState=aboutState;
+      console.log('aboutState',this.aboutState)
+      that.update()
+    })
 setJourneys(){
     this.journeyState="newJourneys"
     console.log('22',this.state)

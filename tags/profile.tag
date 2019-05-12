@@ -60,7 +60,7 @@
 <script>
 var profile={};
 var portraitURL="";
-
+      var storageRef=firebase.storage().ref('photos/'+file.name);
 // get elements
 var uploader=document.getElementById('uploader');
 var portraitFile = document.getElementById('portraitFile');
@@ -73,7 +73,7 @@ console.log('event',portraitFile);
      var file=event.target.files[0];
      var portraitURL=portraitFile.value
      //create a storage usersRef
-      var storageRef=firebase.storage().ref('photos/'+file.name);
+
 //     //upload files
     var task=storageRef.put(file);
 //
