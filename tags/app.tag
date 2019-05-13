@@ -1,18 +1,17 @@
 <app>
-
 <navbar user={user}></navbar>
 <button type="button" name=""  onclick={setProfile} if={profileState==="createProfile"} hide={profileState==="profileDone"||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>New user? create your profile</button>
-<button type="button" name=""  onclick={setJourneys} if={profileState==="profileDone"} hide={this.journeyState==="newJourneys"||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>Start a new journey?</button>
+<!-- <button type="button" name=""  onclick={setJourneys} if={profileState==="profileDone"} hide={this.journeyState==="newJourneys"||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>Start a new journey?</button> -->
 <button type="button" name=""  onclick={startMatch} if={user||this.journeyState==="journeyDone"} hide={this.state==="startMatch"||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>Start match?</button>
 <!-- <button type="button" name=""  onclick={setTravelPrefer} if={user} hide={this.profileState==="setPreference"}>Set your travel preference</button> -->
 <profile if={use||this.state==="setProfile"} hide={profileState==="profileDone"}></profile>
 
-<journeys if={user} show={this.journeyState==="newJourneys"} userEmail={this.user.email}></journeys>
-<matchDesti show={user&&this.state==="startMatch"} user={user} userEmail={userEmail}></matchDesti>
+<journeys if={user && this.journeyState==="newJourneys"} userEmail={this.user.email} hide={this.aboutState==="aboutState"||this.pageState==="LookProfile"||this.state==="startMatch"}></journeys>
+<matchDesti if={user && this.state==="startMatch"} hide={this.aboutState==="aboutState"||this.pageState==="LookProfile"||this.journeyState==="newJourneys"} user={user} userEmail={userEmail}></matchDesti>
 <!-- <profilePrefer user={user} show={this.state==="setPreference"}></profilePrefer> -->
 
-<profilePage if={this.pageState==="LookProfile"}> </profilePage>
-<aboutPage if={this.aboutState==="aboutUs"}> </aboutPage>
+<profilePage if={user && this.pageState==="LookProfile"} hide={this.journeyState==="newJourneys" || this.aboutState==="aboutState"} user={user}> </profilePage>
+<aboutPage if={this.aboutState==="aboutUs"}  hide={this.journeyState==="newJourneys" || this.pageState==="LookProfile" }> </aboutPage>
 
 
 <score></score>
@@ -44,7 +43,49 @@ this.aboutState=null
 var destinationRef=null
 var preference=[]
 var journeyRef=null
+this.journeyState=""
+this.pageState=null
+this.aboutState="aboutUs";
+
 let usersRef = database.collection('users');
+
+   observer.on('journeyState',journeyState=>{
+       this.journeyState=journeyState;
+       this.aboutState="";
+       this.pageState="";
+       this.state="";
+       console.log("journey",journeyState)
+       that.update();
+   })
+
+   observer.on('aboutState',aboutState=>{
+       this.aboutState=aboutState;
+       this.journeyState="";
+       this.pageState="";
+       this.state="";
+       that.update()
+   })
+
+   observer.on('pageState',pageState=>{
+       this.pageState=pageState;
+       this.journeyState="";
+       this.aboutState="";
+       this.state="";
+       that.update()
+   })
+
+   observer.on('startMatch',startMatch=>{
+       this.state=startMatch;
+       this.journeyState="";
+       this.aboutState="";
+       this.pageState="";
+       that.update();
+       // if (this.user){
+           userEmail=this.user.email;
+           observer.trigger('userEmail',userEmail)
+       // }
+
+   })
 
    firebase.auth().onAuthStateChanged(userObj=> {
        console.log('userrrr',userObj)
@@ -53,7 +94,8 @@ let usersRef = database.collection('users');
     // User is signed in.
        this.user=userObj;
        userEmail=this.user.email;
-       observer.trigger('userEmail',userEmail)
+
+       //observer.trigger('userEmail',userEmail)
        usersRef.doc(this.user.email).get().then(function(doc){
            var data=doc.data()
 

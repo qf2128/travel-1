@@ -107,7 +107,7 @@ Question1: Destination of your new Journey
   </div>
 
   <div>
-  <p> Question6: What's your preferred gender of your potential boddy<id="button2"p> <br>
+  <p> Question6: What's your preferred gender of your potential buddy<id="button2"p> <br>
       <select class="form-control" id="gender" onchange={prefferedGender}>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
@@ -118,7 +118,7 @@ Question1: Destination of your new Journey
       </select>
   </div>
   <div class="">
-        <p> Question6: What's your preferred gender of your potential boddy<id="button2"p>
+        <p> Question6: What's your preferred zodiac of your potential buddy<id="button2"p>
             <select class="form-control" id="zodiac" onchange={prefferedZodiac}>
               <option value="Aquarius">Aquarius</option>
               <option value="Pisces">Pisces</option>
