@@ -45,7 +45,7 @@
           <progress value="0" max="100" id="uploader">0%</progress>
           <div class="custom-file">
             <input type="file" value="upload" class="custom-file-input" id="portraitFile">
-            <label class="custom-file-label" for="portraitFile">Choose file</label>
+            <label class="custom-file-label" id="fileButton" for="portraitFile">Choose file</label>
 
           </div>
           <div class="submit">
@@ -60,11 +60,41 @@ var profile={};
 var portraitURL="";
 
 // // get elements
-//        var uploader=document.getElementById('uploader');
+       var uploader=document.getElementById('uploader');
+       var fileButton=document.getElementById('fileButton');
+        //listenforfile selection
+        // start.addEventListener("click",fileButton);
+
+       fileButton.addEventListener('change', function(e){
+         //get files
+          var file=event.target.files[0];
+         //create a storage Ref
+         var storageRef=firebase.storage().ref('photos/file.name');
+         //upload files
+         var task = storageRef.put(file);
+         //update progress
+         task.on('state_changed',
+         function progress(snapshot){
+           var percentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
+           uploader.value = percentage;
+         },
+         function error(err){
+
+         },
+         function complete(){
+
+         }
+       )
+
+       });
+
+
+
+
 //        var portraitFile = document.getElementById('portraitFile');
 //        console.log('event',portraitFile);
-//
-//
+// //
+// //
 //        //get portraitFile
 //        var file=event.target.files[0];
 //         var portraitURL=portraitFile.value
