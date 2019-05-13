@@ -19,7 +19,6 @@ that.startTime=null;
 that.endTime=null;
 that.destinationMatch=null;
 var userMatchAccommodation="";
-var usersRef=null;
 var userMatchDestination="";
 var userMatchTransportation="";
 var matchGender="";
@@ -32,10 +31,11 @@ this.timeMatchEmail=[];
 var userMatchEmail=null;
 that.userMatchEmailNew=null;
 that.matchProfileData=null;
-observer.on('userEmail',userEmail=>{
-    that.userEmail=userEmail;
-    console.log('33333',that.userEmail);
 
+this.user=this.opts.user
+that.userEmail=this.user.email
+
+// observer.on('userEmail',userEmail=>{
     let usersRef = database.collection('users').doc(that.userEmail);
     usersRef.collection("destination").get().then(function(querySnapshot){
     querySnapshot.forEach(function(doc){
@@ -47,7 +47,7 @@ observer.on('userEmail',userEmail=>{
     .catch(function(error) {
           console.log("Error getting documents: ", error);
       })
-})
+// })
 
 
 // create options in select

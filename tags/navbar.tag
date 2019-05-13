@@ -2,6 +2,8 @@
   <!-- HTML -->
 <nav class="navbar navbar-light bg-light">
 	<div class="buttonPosition">
+<button class="btn  my-2 my-sm-0" type="button"  onclick={ setJourneys } if={user||this.journeyState==="journeyDone"}>New journey</button>
+<button class="btn  my-2 my-sm-0" type="button"  onclick={ startMatch } if={user||this.journeyState==="journeyDone"}>Travel buddies</button>
 <button class="btn  my-2 my-sm-0" type="button" onclick={ profile }>Profile</button>
 <button  class="btn  my-2 my-sm-0" type="button" onclick={ about }>Home</button>
 		</div>
@@ -14,6 +16,10 @@
 				<button show={ user } class="btn btn-outline-danger my-2 my-sm-0" type="button" onclick={ logout }>Logout</button>
 	    </div>
     </div>
+    <br>
+
+    <!-- <journeys if={user} show={this.journeyState==="newJourneys"} userEmail={this.user.email}></journeys> -->
+
 
 
   <script>
@@ -49,24 +55,25 @@
 	    // }
 
 
-
-  profile(){
+    profile(){
 		 pageState="LookProfile";
 		 observer.trigger('PageState',pageState)
 	}
 
-about(){
+       about(){
 		 aboutState="aboutUs";
 		 observer.trigger('aboutState',aboutState)
 	}
 
+       setJourneys(){
+         journeyState="newJourneys";
+         observer.trigger('journeyState',journeyState)
+    }
 
-
-
-
-
-
-
+      startMatch(){
+          startMatch="startMatch";
+          observer.trigger('startMatch',startMatch)
+      }
 		login() {
 			var provider = new firebase.auth.GoogleAuthProvider();
 			firebase.auth().signInWithPopup(provider);
