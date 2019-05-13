@@ -131,7 +131,7 @@ let usersRef = database.collection('users');
                that.profileState="profileDone"
                console.log('have profile')
            } else{
-               data.userAge=""
+               data.userAge="";
                this.state="setProfile";
                that.update()
                console.log('dont have profile')
