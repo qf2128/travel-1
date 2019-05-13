@@ -5,8 +5,7 @@
 <button class="btn  my-2 my-sm-0" type="button"  onclick={ setJourneys } if={user||this.journeyState==="journeyDone"}>New journey</button>
 <button class="btn  my-2 my-sm-0" type="button"  onclick={ startMatch } if={user||this.journeyState==="journeyDone"}>Travel buddies</button>
 <button class="btn  my-2 my-sm-0" type="button" onclick={ profile }>Profile</button>
-<button  class="btn  my-2 my-sm-0" type="button" onclick={ about }>About</button>
-
+<button  class="btn  my-2 my-sm-0" type="button" onclick={ about }>Home</button>
 		</div>
 	  <div id="navbarSupportedContent">
 	    <ul class="  mr-auto">

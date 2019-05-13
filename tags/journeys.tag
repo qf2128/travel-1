@@ -1,8 +1,20 @@
 <journeys>
+<div class="luggage">
+  <div class="container">
+<br>
+<br>
+        <div class="row">
+          <div class="col-8">
+          <h1> Journey </h1>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-6">
+    <div class="text">
 
-    <div>
-Question1: Destination of your new Journey
-    <select value="destination" onchange={submitDestination}>
+ <h3>1: Destination of your new Journey</h3>
+    <select class="form-control" value="destination" onchange={submitDestination}>
         <option value="">---</option>
         <option value="Amsterdam">Amsterdam</option>
         <option value="Burlin">Burlin</option>
@@ -16,6 +28,8 @@ Question1: Destination of your new Journey
         <option value="Paris">Paris</option>
         <option value="Shanghai">Shanghai</option>
     </select>
+</div>
+</div>
 </div>
 <!-- time: from
     <select value="time" onchange={submitTime}>
@@ -49,17 +63,29 @@ Question1: Destination of your new Journey
         <option value="11">November</option>
         <option value="12">December</option>
     </select> -->
-
+    <div class="row">
+      <div class="col-6">
+        <br>
     <form>
-       <label for="start">Question 2: Choose your planned journey time</label><br>
-       From <input type="month" id="start" name="start" min="2019-5.13" max="2020-5.13" onchange={submitStartTime}><br>
-       To <input type="month" id="start" name="start" min="2019-5.13" max="2020-5.13" onchange={submitEndTime}>
+       <label for="start"><h3>2: Choose your planned journey time</h3></label><br>
+       From <input class="form-control" type="month" id="start" name="start" min="2019-5.13" max="2020-5.13" onchange={submitStartTime}><br>
+       To <input class="form-control" type="month" id="start" name="start" min="2019-5.13" max="2020-5.13" onchange={submitEndTime}>
     </form>
+  </div>
+</div>
 
+    <div class="row">
+      <div class="col-7">
 <div class="preference">
-    Question 3: which are the three most important elements you would value in a journey? <br>
+  <br>
+    <h3> 3: which are the three most important elements you would value in a journey? </h3><br>
+</div>
+</div>
+</div>
+    <div class="row">
+      <div class="col-6">
     The First:
-<select value="first" onchange={firstPreferSet}>
+<select  class="form-control" value="first" onchange={firstPreferSet}>
   <option value="">---</option>
   <option value="gender"> travel buddy's gender</option>
   <option value="zodiac">travel buddy's zodiac</option>
@@ -69,7 +95,7 @@ Question1: Destination of your new Journey
   <option value="travelType">travel type (casual/planned)</option>
 </select>
    <br>The Second:
-<select value="second" onchange={secondPreferSet}>
+<select class="form-control" value="second" onchange={secondPreferSet}>
     <option value="">---</option>
     <option value="gender">travel buddy's gender</option>
     <option value="zodiac">travel buddy's zodiac</option>
@@ -79,7 +105,7 @@ Question1: Destination of your new Journey
     <option value="travelType">travel type (casual/planned)</option>
 </select>
    <br>The Third:
-<select value="third" onchange={thirdPreferSet}>
+<select  class="form-control" value="third" onchange={thirdPreferSet}>
     <option value="">---</option>
     <option value="gender">gender</option>
     <option value="zodiac">zodiac</option>
@@ -89,25 +115,46 @@ Question1: Destination of your new Journey
     <option value="travelType">travel type (casual/planned)</option>
 </select>
 </div>
+</div>
 
+
+<div class="row">
+  <div class="col">
 <div>
-<p> Question4: Choose a star rating of accommodation </p>
+    <br>
+<h3> 4: Choose a star rating of accommodation </h3>
 <button type="button" class="btn btn-outline-dark" id="button1">1 star</button>
 <button type="button" class="btn btn-outline-dark" id="button1"> 2 star </button>
 <button type="button" class="btn btn-outline-dark" id="button1"> 3 star </button>
   <button type="button" class="btn btn-outline-dark" id="button1"> 4 star </button>
     <button type="button" class="btn btn-outline-dark" id="button1"> 5 star </button>
 </div>
+</div>
+</div>
 
+<div class="row">
+  <div class="col">
   <div>
-  <p> Question5: Choose your ideal transportation during travel <id="button2"p> <br>
+      <br>
+  <h3> 5: Choose your ideal transportation during travel </h3> <br>
   <button type="button" class="btn btn-outline-dark" id="button2"> Self-driving</button>
   <button type="button" class="btn btn-outline-dark" id="button2"> Public Transportation </button>
   <button type="button" class="btn btn-outline-dark" id="button2"> Uber/Taxi </button>
   </div>
+</div>
+</div>
 
+<div class="row">
+  <div class="col">
   <div>
-  <p> Question6: What's your preferred gender of your potential buddy<id="button2"p> <br>
+      <br>
+  <h3> 6: What's your preferred gender of your potential buddy?</h3> <br>
+</div>
+</div>
+</div>
+
+  <div class="row">
+    <div class="col-3">
       <select class="form-control" id="gender" onchange={prefferedGender}>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
@@ -117,8 +164,20 @@ Question1: Destination of your new Journey
         <option value="Transgender">Transgender</option>
       </select>
   </div>
+</div>
+
+
+  <div class="row">
+    <div class="col">
   <div class="">
-        <p> Question6: What's your preferred zodiac of your potential buddy<id="button2"p>
+      <br>
+        <h3> 7: What's your preferred zodiac of your potential buddy? </h3>
+  </div>
+</div>
+</div>
+
+        <div class="row">
+          <div class="col-3">
             <select class="form-control" id="zodiac" onchange={prefferedZodiac}>
               <option value="Aquarius">Aquarius</option>
               <option value="Pisces">Pisces</option>
@@ -134,10 +193,21 @@ Question1: Destination of your new Journey
               <option value="Capricorn">Capricorn</option>
             </select>
   </div>
+ </div>
+ <br>
+ <div class="row">
+   <div class="col-3">
+ <button class="btn btn-light" type="button" name="button" onclick={submitJourney}>Submit</button>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 
 
-<button type="button" name="button" onclick={submitJourney}>Submit</button>
+
+
     <script>
     var journey={};
     var destination="";
@@ -220,4 +290,23 @@ Question1: Destination of your new Journey
           }
 
     </script>
+<style>
+.luggage{
+  background-image: url("images/luggage.jpg");
+
+}
+.container {
+font-family: Gill Sans, sans-serif;
+margin-left: 20%;
+}
+.form-control{
+
+  background-color:rgba(0,64,133,0.1);
+}
+
+
+
+
+
+</style>
 </journeys>
