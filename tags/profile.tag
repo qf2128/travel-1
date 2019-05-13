@@ -46,9 +46,15 @@
           </div>
           <progress value="0" max="100" id="uploader">0%</progress>
           <div class="custom-file">
+=========
+            <input type="file" value="upload" class="custom-file-input" id="portraitFile">
+            <label class="custom-file-label" id="fileButton" for="portraitFile">Choose file</label>
+
+
             <input type="file" ref="media" class="custom-file-input" id="portraitFile" onchange={portraitFile}>
             <label class="custom-file-label">choose your portrait image</label>
             <button type="button" name="button" onclick={ save } disabled={ !file }>save image</button>
+=========
           </div>
           <div class="submit">
             <button type="button" class="btn btn-outline-secondary" onclick={submitProfile} >Submit</button>
@@ -59,6 +65,7 @@
 <script>
 var profile={};
 var portraitURL="";
+
 this.state="";
 
 let momentsRef = database.collection('portrait');
