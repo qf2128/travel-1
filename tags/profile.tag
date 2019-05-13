@@ -132,6 +132,8 @@ submitProfile() {
              portrait:portraitURL}
     console.log('profile',profile)
     observer.trigger('profile',profile)
+    var pageState="LookProfile"
+    observer.trigger('pageState',pageState)
 } else{
     alert("Please fill all the information")
 }
