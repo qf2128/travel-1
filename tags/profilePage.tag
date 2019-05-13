@@ -26,11 +26,22 @@
             </div>
                <div class="row">
                   <div class="col">
-                    <button type="button" class="btn btn-outline-light font-weight-bold" name=""  onclick={ setJourneys }  >Start A New Journey</button>
+                    <button type="button" class="btn btn-outline-dark font-weight-bold" name=""  onclick={ setJourneys }  >Start A New Journey</button>
                   </div>
                </div>
-        </div>
+
     </div>
+      </div>
+    <div class="footage">
+    <div class="container">
+          <div class="row">
+              <div class="col">
+                  <p>  @ 2019 Travelmate</p>
+              </div>
+          </div>
+    </div>
+    </div>
+
   </div>
 
     <!-- <journeys if={user} userEmail={userEmail}></journeys> -->
@@ -120,21 +131,24 @@ this.on('update', () => {
 <style>
 .airBalloon {
 
-  background-image: url("images/airBalloon.jpg");
+  background-image: url("images/ocean.jpg");
+
 }
 h1 {
  margin-top: 50px;
   margin-left: 45%;
   size: 20px;
+  font-family: Gill Sans, sans-serif;
 }
 h2 {
 margin-top: 40px;
+  font-family: Gill Sans, sans-serif;
 
   size: 15px;
 }
 h3 {
 size: 8px;
-
+  font-family: Gill Sans, sans-serif;
 }
 img{
  margin-top: 50px;
@@ -143,13 +157,25 @@ img{
 }
 button{
 margin-top: 10px;
-margin-bottom: 10px;
+margin-bottom: 20px;
 margin-left: 7px;
 }
 .question {
 margin-top: 50px;
 margin-bottom: 50px;
 
+}
+.footage {
+  /* margin-top: 20px; */
+/* color:white;
+  background-color:rgba(33,37,41,0.5); */
+margin-left: -130px;
+
+}
+
+p{
+
+    margin-left:50%;
 }
 </style>
 </profilePage>

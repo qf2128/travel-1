@@ -58,7 +58,15 @@
 
 
 </div>
-
+<div class="footage">
+<div class="container">
+      <div class="row">
+          <div class="col">
+              <p>  @ 2019 Travelmate</p>
+          </div>
+      </div>
+</div>
+</div>
 
 
 <style>
@@ -276,7 +284,7 @@ startMatch(){
                     }
                  timeMatchRef.doc(that.userMatchEmailNew).set({
                       accommodationScore:accommodationScore},{merge:true})
-                  
+
                    that.update();
             }
          })
@@ -305,5 +313,20 @@ startMatch(){
 
 
 </script>
+
+<style>
+.footage {
+  /* margin-top: 20px; */
+/* color:white;
+  background-color:rgba(33,37,41,0.5); */
+margin-left: -130px;
+
+}
+
+p{
+
+    margin-left:35%;
+}
+</style>
 
 </matchDesti>
