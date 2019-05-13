@@ -2,9 +2,9 @@
 <navbar user={user}></navbar>
 <button type="button" name=""  onclick={setProfile} if={profileState==="createProfile"} hide={profileState==="profileDone"||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>New user? create your profile</button>
 <!-- <button type="button" name=""  onclick={setJourneys} if={profileState==="profileDone"} hide={this.journeyState==="newJourneys"||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>Start a new journey?</button> -->
-<button type="button" name=""  onclick={startMatch} if={user||this.journeyState==="journeyDone"} hide={this.state||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>Start match?</button>
+<button type="button" name=""  onclick={startMatch} if={user&&this.journeyState==="journeyDone"} hide={this.state||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>Start match?</button>
 <!-- <button type="button" name=""  onclick={setTravelPrefer} if={user} hide={this.profileState==="setPreference"}>Set your travel preference</button> -->
-<profile if={use||this.state==="setProfile"} hide={profileState==="profileDone"}></profile>
+<profile if={use || this.state==="setProfile"} hide={profileState==="profileDone"}></profile>
 
 <journeys if={user && this.journeyState==="newJourneys"} userEmail={this.user.email} hide={this.aboutState==="aboutState"||this.pageState==="LookProfile"||this.state==="startMatch"}></journeys>
 <matchDesti if={user && this.state==="startMatch"} hide={this.aboutState==="aboutState"||this.pageState==="LookProfile"||this.journeyState==="newJourneys"} user={user} userEmail={userEmail}></matchDesti>
@@ -60,7 +60,6 @@ let usersRef = database.collection('users');
    observer.on('setProfile',setProfile=>{
        if (data.userAge){
            this.pageState="LookProfile"
-           console.log('here',data.userAge)
        } else {
           this.state=setProfile
           console.log('here',this.state)
@@ -84,17 +83,11 @@ let usersRef = database.collection('users');
    observer.on('pageState',pageState=>{
        if (data.userAge){
            this.pageState=pageState
-            console.log("set",data.userAge)
        } else {
-
            this.state="setProfile"
-           console.log("settttttt",this.pageState)
-          that.update()
       }
        this.journeyState="";
        this.aboutState="";
-       this.state="";
-       profileState="";
        that.update()
    })
 
