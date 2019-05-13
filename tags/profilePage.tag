@@ -9,17 +9,17 @@
             </div>
             <div class="row">
                <div class="col-6">
-                  <h2>Username:{userName}</h2>
-                  <h2>Gender:{userGender}</h2>
-                  <h2>Age:{userAge}</h2>
-                  <h2>Zodiac Sign:{userZodiac}</h2>
+                  <h2>Username: {userName}</h2>
+                  <h2>Gender: {userGender}</h2>
+                  <h2>Age: {userAge}</h2>
+                  <h2>Zodiac Sign: {userZodiac}</h2>
                </div>
                <div class="col-6">
                   <div class="avatar"><img src={mediaURL} width=250px></div>
                      <progress value="0" max="100" id="uploader">0%</progress>
                   <div class="custom-file">
                      <input type="file" value="upload" class="custom-file-input" id="portraitFile" onchange={portraitFile}>
-                     <label class="custom-file-label" for="portraitFile">Change your portrait</label>
+                     <label class="custom-file-label" for="portraitFile">Want to update your image?</label>
                                  <button type="button" name="button" onclick={ save } disabled={ !file }>save image</button>
                   </div>
                </div>
@@ -41,8 +41,21 @@ var that=this;
 this.mediaUEL;
  // let usersRef = database.collection('users').;
  this.user=this.opts.user;
- this.userEmail=this.user.email
+ this.userEmail=this.user.email;
+
  let usersImageRef = database.collection('portrait');
+ let usersRef=database.collection('users')
+
+// get user Profile from firebase
+ usersRef.doc(this.userEmail).get().then(function(doc){
+     var data=doc.data()
+     this.userName=data.userName;
+     this.userAge=data.userAge;
+     this.userZodiac=data.userZodiac;
+     this.userGender=data.userGender;
+ })
+
+ //  get images
  usersImageRef.doc(this.userEmail).get().then(function(doc){
      var data=doc.data();
      this.mediaURL=data.mediaURL;
@@ -50,7 +63,7 @@ this.mediaUEL;
      that.update()
  })
 
-
+//  change images
 var profile={};
 var portraitURL="";
 this.state="";
@@ -70,6 +83,7 @@ portraitFile(event){
     this.file = file;
 }
 
+// save image to firebase  storage
 save(){
     let uniqueName = this.file.name + "-" + Date.now();
     let fileRef = mediaStorageRef.child(uniqueName);
@@ -78,7 +92,6 @@ save(){
     console.log('UPLOADED File');
     return snapshot.ref.getDownloadURL();
     }).then(downloadURL => {
-        console.log('-----1111',downloadURL)
     let key = momentsRef.doc(firebase.auth().currentUser.email).id;
 
     this.moment = {
@@ -89,7 +102,6 @@ save(){
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
     };
      this.mediaURL=this.moment.mediaURL;
-     console.log('-----1111',this.mediaURL)
      that.update()
     return momentsRef.doc(key).set(this.moment);
 }).then( () => {
@@ -101,19 +113,16 @@ save(){
  setJourneys(){
   var journeyState="newJourneys"
   observer.trigger('journeyState',journeyState)
- // this.user=this.opts.user
- // this.userEmail=this.user.email
- // // debugger;
- // if (!this.user){
- //    alert("please fill your profile first")
- // }
- // console.log("uuuuuuu",that.user)
 }
+
+
 
 this.on('update', () => {
     that.user = opts.user;
     console.log('this.onnnn',this.user);
 });
+
+
 
 </script>
 
