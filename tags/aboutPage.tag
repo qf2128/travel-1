@@ -14,7 +14,10 @@
       </div>
       <div class="row">
           <div class="col">
-            <button type="button" class="btn btn-outline-light font-weight-bold" name=""  onclick={Discover} }>Discover your Travelmate</button>
+            <button type="button" class="btn btn-outline-light font-weight-bold" name=""  onclick={profile}>New User? Create your own profile</button>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-outline-light font-weight-bold" name=""  onclick={discover} }>Discover your Travelmate</button>
           </div>
       </div>
     </div>
@@ -33,7 +36,7 @@
            <h4> Sign up, create your profile and upload your photos, join one of the largest online travelmate communities.</h4>
         </div>
       </div>
-      <div class="row">
+      <div class="row wrapper">
         <div class="col-3">
           <img src="images/connect.jpg" alt=" connect" width="100" height="100">
         </div>
@@ -82,9 +85,19 @@
       </div>
 
     </div>
-
-
   </div>
+
+  <script>
+      profile(){
+         setProfile="setProfile";
+         observer.trigger("setProfile",setProfile)
+      }
+
+      discover(){
+         journeyState="newJourneys";
+         observer.trigger('journeyState',journeyState)
+      }
+  </script>
   <style>
     h1 {
      margin-top: 210px;
@@ -125,5 +138,19 @@ img{
  margin-top:17px;
   margin-left:80px;
 }
+
+/* .wrapper{
+width:100%;
+margin:0 autto;
+
+}
+.left{
+    width:250px;
+
+}
+.right{
+    width:250px;
+
+} */
   </style>
 </aboutPage>

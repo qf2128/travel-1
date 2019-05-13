@@ -2,7 +2,7 @@
 <navbar user={user}></navbar>
 <button type="button" name=""  onclick={setProfile} if={profileState==="createProfile"} hide={profileState==="profileDone"||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>New user? create your profile</button>
 <!-- <button type="button" name=""  onclick={setJourneys} if={profileState==="profileDone"} hide={this.journeyState==="newJourneys"||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>Start a new journey?</button> -->
-<button type="button" name=""  onclick={startMatch} if={user||this.journeyState==="journeyDone"} hide={this.state==="startMatch"||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>Start match?</button>
+<button type="button" name=""  onclick={startMatch} if={user||this.journeyState==="journeyDone"} hide={this.state||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>Start match?</button>
 <!-- <button type="button" name=""  onclick={setTravelPrefer} if={user} hide={this.profileState==="setPreference"}>Set your travel preference</button> -->
 <profile if={use||this.state==="setProfile"} hide={profileState==="profileDone"}></profile>
 
@@ -10,7 +10,7 @@
 <matchDesti if={user && this.state==="startMatch"} hide={this.aboutState==="aboutState"||this.pageState==="LookProfile"||this.journeyState==="newJourneys"} user={user} userEmail={userEmail}></matchDesti>
 <!-- <profilePrefer user={user} show={this.state==="setPreference"}></profilePrefer> -->
 
-<profilePage if={user && this.pageState==="LookProfile"} hide={this.journeyState==="newJourneys" || this.aboutState==="aboutState"} user={user}> </profilePage>
+<profilePage if={user && this.pageState==="LookProfile"} hide={this.journeyState==="newJourneys" || this.aboutState==="aboutState" || this.state==="setProfile"} user={user}> </profilePage>
 <aboutPage if={this.aboutState==="aboutUs"}  hide={this.journeyState==="newJourneys" || this.pageState==="LookProfile" }> </aboutPage>
 
 
@@ -46,6 +46,7 @@ var journeyRef=null
 this.journeyState=""
 this.pageState=null
 this.aboutState="aboutUs";
+var data=null;
 
 let usersRef = database.collection('users');
 
@@ -54,7 +55,21 @@ let usersRef = database.collection('users');
        this.aboutState="";
        this.pageState="";
        this.state="";
-       console.log("journey",journeyState)
+       that.update();
+   })
+   observer.on('setProfile',setProfile=>{
+       if (data.userAge){
+           this.pageState="LookProfile"
+           console.log('here',data.userAge)
+       } else {
+          this.state=setProfile
+          console.log('here',this.state)
+      }
+      that.update()
+       this.journeyState="";
+       this.aboutState="";
+       this.pageState="";
+
        that.update();
    })
 
@@ -67,12 +82,23 @@ let usersRef = database.collection('users');
    })
 
    observer.on('pageState',pageState=>{
-       this.pageState=pageState;
+       if (data.userAge){
+           this.pageState=pageState
+            console.log("set",data.userAge)
+       } else {
+
+           this.state="setProfile"
+           console.log("settttttt",this.pageState)
+          that.update()
+      }
        this.journeyState="";
        this.aboutState="";
        this.state="";
+       profileState="";
        that.update()
    })
+
+
 
    observer.on('startMatch',startMatch=>{
        this.state=startMatch;
@@ -97,8 +123,7 @@ let usersRef = database.collection('users');
 
        //observer.trigger('userEmail',userEmail)
        usersRef.doc(this.user.email).get().then(function(doc){
-           var data=doc.data()
-
+               data=doc.data()
            if (!doc.exists){
                console.log('no profile',data)
                that.profileState="createProfile";
@@ -107,11 +132,16 @@ let usersRef = database.collection('users');
                     userName:userObj.displayName,
                     userEmail:userObj.email
                })
-
-
-           } else{
+           }
+           if (data.userAge){
+               console.log("user has set profile")
                that.profileState="profileDone"
-               console.log('have profile',data)
+               console.log('have profile')
+           } else{
+               data.userAge=""
+               this.state="setProfile";
+               that.update()
+               console.log('dont have profile')
            }
            console.log('state',that.profileState)
            that.update()
@@ -139,13 +169,6 @@ let usersRef = database.collection('users');
    let stopListening;
 
     observer.on('userEntered',userProfile=>{
-    })
-
-
-    observer.on('PageState',pageState=>{
-      this.pageState=pageState;
-      console.log('PageState',this.pageState)
-      that.update()
     })
 
     observer.on('aboutState',aboutState=>{
