@@ -3,7 +3,7 @@
 <nav class="navbar navbar-light bg-light">
 	<div class="buttonPosition">
 <button class="btn  my-2 my-sm-0" type="button" onclick={ profile }>Profile</button>
-<button  class="btn  my-2 my-sm-0" type="button" onclick={ about }>About</button>
+<button  class="btn  my-2 my-sm-0" type="button" onclick={ about }>Home</button>
 		</div>
 	  <div id="navbarSupportedContent">
 	    <ul class="  mr-auto">
