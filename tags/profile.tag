@@ -59,57 +59,62 @@
 var profile={};
 var portraitURL="";
 
-//       var storageRef=firebase.storage().ref('photos/'+file.name);
 // // get elements
-// var uploader=document.getElementById('uploader');
-// var portraitFile = document.getElementById('portraitFile');
-// console.log('event',portraitFile);
+//        var uploader=document.getElementById('uploader');
+//        var portraitFile = document.getElementById('portraitFile');
+//        console.log('event',portraitFile);
 //
+//
+//        //get portraitFile
+//        var file=event.target.files[0];
+//         var portraitURL=portraitFile.value
+//
+//        // create a storage usersRef
+//        var storageRef=firebase.storage().ref('photos/'+file.name);
+
 //  portraitFile.addEventListener('change',this.uploadFile);
 //   uploadFile (){
 //     console.log("event",portraitFile);
-//     //get portraitFile
-//      var file=event.target.files[0];
-//      var portraitURL=portraitFile.value
-//      //create a storage usersRef
+//
 //  }
 
 this.state="";
 // get elements
-var uploader=document.getElementById('uploader');
-var portraitFile = document.getElementById('portraitFile');
-// console.log('event',portraitFile);
+// var uploader=document.getElementById('uploader');
+// var portraitFile = document.getElementById('portraitFile');
+// console.log("event",portraitFile)
 //
-// portraitFile.addEventListener('change',this.uploadFile);
-//     uploadFile (){
-//     console.log("event",portraitFile);
-//     //get portraitFile
-//     var file=event.target.files[0];
-//     // var portraitURL=portraitFile.value
+//               //listenforfile selection
+//              portraitFile.addEventListener('change',function(e){
+//                  //get portraitFile
+//                  var file=event.target.files[0];
+//                  // var portraitURL=portraitFile.value
 //
-//     //create a storage usersRef
-//     var storageRef=firebase.storage().ref('photos/'+file.name);
+//                  //create a storage usersRef
+//                  var storageRef=firebase.storage().ref('photo/'+file.name);
 //
+//                  //upload files
+//                  var task=storageRef.put(file);
+//
+//                  //upload progress bar
+//                  task.on('state_changed',
+//                       function progress(snapshot){
+//                           var percentage = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+//                           uploader.value=percentage;
+//                       },
+//
+//                       function error(err){
+//
+//                       },
+//
+//                       function complete(){
+//
+//                       }
+//                  )
+//              })
 
-//     //upload files
-//     var task=storageRef.put(file);
-//
-//     //upload progress bar
-//     task.on('state_changed',
-//          function progress(snapshot){
-//              var percentage = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
-//              uploader.value=percentage;
-//          },
-//
-//          function error(err){
-//
-//          },
-//
-//          function complete(){
-//
-//          }
-//     )
-//     }
+
+
 
 submitProfile() {
 
@@ -119,7 +124,7 @@ submitProfile() {
     var zodiac=document.getElementById('zodiac').value;
     var portraitURL=document.getElementById('portraitFile').value;
 
-
+    if(userName&&age&&gender&&zodiac&&portraitURL){
     profile={userName:userName,
              age:age,
              gender:gender,
@@ -127,8 +132,10 @@ submitProfile() {
              portrait:portraitURL}
     console.log('profile',profile)
     observer.trigger('profile',profile)
-
+} else{
+    alert("Please fill all the information")
 }
+  }
 
 
 

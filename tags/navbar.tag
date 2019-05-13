@@ -58,7 +58,7 @@
 
     profile(){
 		 pageState="LookProfile";
-		 observer.trigger('PageState',pageState)
+		 observer.trigger('pageState',pageState)
 	}
 
        about(){
