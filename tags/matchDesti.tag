@@ -1,11 +1,89 @@
 <matchDesti>
-    <score timeMatchEmail={timeMatchEmail}></score>
-    <label for="destination" if={user}>which journey</label>
-    <select value="destination" onchange={startMatch}>
-        <option value="">---</option>
-        <option value={item} each={item,i in destination}>{item}</option>
-    </select>
-    <span>{ timeMatchEmail } here </span>
+<div class="effiel">
+
+  <div class="container">
+    <div class="row">
+
+      <div class="checkout">
+        <h1>Check out your Travelmates</h1>
+        <div class="line1">
+          <label for="destination" if={user}>Choose the journey</label>
+          <select value="destination" onchange={startMatch}>
+            <option value="">---</option>
+            <option value={item} each={item,i in destination}>{item}</option>
+          </select>
+          <br/>
+          Below are your prospective travelmates recommended for you:
+        </div>
+
+        <div class="results">
+
+          <div class="card">
+		        <div class="card-header">{ username }</div>
+		        <div class="card-body">
+
+              <div class="container">
+                <div class="row">
+                  <div class="col-6">
+                    <img if={ moment.mediaType.startsWith("image") } src="{ moment.mediaURL }">
+                  </div>
+                  <div class="col-6">
+                   Gender: {matchProfileData.userGender}<br/>
+                   Age: {matchProfileData.userAger}<br/>
+                   Zodiac Sign: {matchProfileData.userZodiac}
+                  </div>
+                </div>
+              </div>
+
+
+		        </div>
+		        <div class="card-footer">
+			        Contact: { timeMatchEmail }
+		        </div>
+	        </div>
+
+        </div>
+
+
+
+
+
+      </div>
+
+
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+
+<style>
+
+.effiel{
+  background-image: url("images/effielTower.jpg");
+}
+.container {
+font-family: Gill Sans, sans-serif;
+margin-left: 20%;
+
+}
+.checkout{
+margin-top: 50px;
+margin-bottom: 50px;
+}
+.line1{
+  font-size: 20px;
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
+
+</style>
+
+
 
 <script>
 var that=this;
@@ -26,6 +104,7 @@ var matchZodiac="";
 // var genderScore=0;
 // var zodiacScore=0;
 // var transportaionScore=0;
+// var totalScore=0;
 var preference=[];
 this.timeMatchEmail=[];
 var userMatchEmail=null;
@@ -197,7 +276,7 @@ startMatch(){
                     }
                  timeMatchRef.doc(that.userMatchEmailNew).set({
                       accommodationScore:accommodationScore},{merge:true})
-
+                  
                    that.update();
             }
          })

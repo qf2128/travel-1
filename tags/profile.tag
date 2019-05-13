@@ -41,17 +41,24 @@
         </div>
 
         <div class="col">
-          <div class="avatar"><img src="http://www.designshock.com/wp-content/uploads/2016/04/man-7-400.jpg" width="30%"/></div>
+          <div class="avatar">
+              <img src="{ moment.mediaURL }" width="30%"/>
+          </div>
           <progress value="0" max="100" id="uploader">0%</progress>
           <div class="custom-file">
+=========
             <input type="file" value="upload" class="custom-file-input" id="portraitFile">
             <label class="custom-file-label" id="fileButton" for="portraitFile">Choose file</label>
 
+
+            <input type="file" ref="media" class="custom-file-input" id="portraitFile" onchange={portraitFile}>
+            <label class="custom-file-label">choose your portrait image</label>
+            <button type="button" name="button" onclick={ save } disabled={ !file }>save image</button>
+=========
           </div>
           <div class="submit">
-            <button type="button" class="btn btn-outline-secondary" onclick={submitProfile}>Submit</button>
-
-      </div>
+            <button type="button" class="btn btn-outline-secondary" onclick={submitProfile} >Submit</button>
+          </div>
 
     </div>
 
@@ -59,91 +66,49 @@
 var profile={};
 var portraitURL="";
 
-// // get elements
-       var uploader=document.getElementById('uploader');
-       var fileButton=document.getElementById('fileButton');
-        //listenforfile selection
-        // start.addEventListener("click",fileButton);
-
-       fileButton.addEventListener('change', function(e){
-         //get files
-          var file=event.target.files[0];
-         //create a storage Ref
-         var storageRef=firebase.storage().ref('photos/file.name');
-         //upload files
-         var task = storageRef.put(file);
-         //update progress
-         task.on('state_changed',
-         function progress(snapshot){
-           var percentage = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
-           uploader.value = percentage;
-         },
-         function error(err){
-
-         },
-         function complete(){
-
-         }
-       )
-
-       });
-
-
-
-
-//        var portraitFile = document.getElementById('portraitFile');
-//        console.log('event',portraitFile);
-// //
-// //
-//        //get portraitFile
-//        var file=event.target.files[0];
-//         var portraitURL=portraitFile.value
-//
-//        // create a storage usersRef
-//        var storageRef=firebase.storage().ref('photos/'+file.name);
-
-//  portraitFile.addEventListener('change',this.uploadFile);
-//   uploadFile (){
-//     console.log("event",portraitFile);
-//
-//  }
-
 this.state="";
-// get elements
-// var uploader=document.getElementById('uploader');
-// var portraitFile = document.getElementById('portraitFile');
-// console.log("event",portraitFile)
-//
-//               //listenforfile selection
-//              portraitFile.addEventListener('change',function(e){
-//                  //get portraitFile
-//                  var file=event.target.files[0];
-//                  // var portraitURL=portraitFile.value
-//
-//                  //create a storage usersRef
-//                  var storageRef=firebase.storage().ref('photo/'+file.name);
-//
-//                  //upload files
-//                  var task=storageRef.put(file);
-//
-//                  //upload progress bar
-//                  task.on('state_changed',
-//                       function progress(snapshot){
-//                           var percentage = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
-//                           uploader.value=percentage;
-//                       },
-//
-//                       function error(err){
-//
-//                       },
-//
-//                       function complete(){
-//
-//                       }
-//                  )
-//              })
 
+let momentsRef = database.collection('portrait');
+let storageRef = firebase.storage().ref();
+let mediaStorageRef = storageRef.child('image');
+this.file=null;
 
+portraitFile(event){
+    let fileInput=event.target;
+    let files=fileInput.files;
+    let file=files[0];
+    let fileName=file.name;
+    let fileSize= file.size;
+    let fileType= file.type;
+    this.file = file;
+}
+
+save(){
+    let uniqueName = this.file.name + "-" + Date.now();
+    let fileRef = mediaStorageRef.child(uniqueName);
+
+    fileRef.put(this.file).then(snapshot => {
+    console.log('UPLOADED File');
+    return snapshot.ref.getDownloadURL();
+    }).then(downloadURL => {
+        console.log('-----1111',downloadURL)
+    let key = momentsRef.doc(firebase.auth().currentUser.email).id;
+
+    this.moment = {
+    author: firebase.auth().currentUser.email,
+    mediaURL: downloadURL,
+    mediaType: this.file.type,
+    id: key,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+    console.log('moment',this.moment)
+    return momentsRef.doc(key).set(this.moment);
+}).then( () => {
+    console.log('SAVED to DATABASE');
+    this.reset();
+    this.update();
+     });;
+    }
 
 
 submitProfile() {

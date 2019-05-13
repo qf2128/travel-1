@@ -60,6 +60,7 @@ let usersRef = database.collection('users');
    observer.on('setProfile',setProfile=>{
        if (data.userAge){
            this.pageState="LookProfile"
+           console.log('there123',this.state)
        } else {
           this.state=setProfile
           console.log('here',this.state)
@@ -67,7 +68,6 @@ let usersRef = database.collection('users');
       that.update()
        this.journeyState="";
        this.aboutState="";
-       this.pageState="";
 
        that.update();
    })
@@ -131,7 +131,7 @@ let usersRef = database.collection('users');
                that.profileState="profileDone"
                console.log('have profile')
            } else{
-               data.userAge=""
+               data.userAge="";
                this.state="setProfile";
                that.update()
                console.log('dont have profile')

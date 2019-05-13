@@ -17,7 +17,7 @@
             <button type="button" class="btn btn-outline-light font-weight-bold" name=""  onclick={profile}>New User? Create your own profile</button>
           </div>
           <div class="col">
-            <button type="button" class="btn btn-outline-light font-weight-bold" name=""  onclick={discover} }>Discover your Travelmate</button>
+            <button type="button" class="btn btn-outline-light font-weight-bold" name=""  onclick={discover} >Discover your Travelmate</button>
           </div>
       </div>
     </div>
@@ -54,6 +54,7 @@
            <h4>Plan and enjoy your trip!</h4>
         </div>
       </div>
+=======
   </div>
     <div class="story">
     <div class="container">
@@ -87,6 +88,8 @@
     </a>
   </div>
       </div>
+=======
+
 
     </div>
   </div>
