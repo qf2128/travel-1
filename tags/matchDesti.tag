@@ -36,7 +36,7 @@ observer.on('userEmail',userEmail=>{
     that.userEmail=userEmail;
     console.log('33333',that.userEmail);
 
-    let usersRef = database.collection('users').doc(that.userEmail);
+    usersRef = database.collection('users').doc(that.userEmail);
     usersRef.collection("destination").get().then(function(querySnapshot){
     querySnapshot.forEach(function(doc){
     that.destination.push(doc.id)
@@ -68,7 +68,7 @@ observer.on('destination',destination=>{
 
 startMatch(){
       console.log('here')
-      let usersRef = database.collection('users').doc(that.userEmail);
+
       that.destinationMatch=event.target.value
 
       //  get user profile
@@ -82,7 +82,7 @@ startMatch(){
            observer.trigger('userJourneyData',userJourneyData)
            that.startTime=that.userData.startTime;
            that.endTime=that.userData.endTime;
-           // debugger;
+           debugger;
            preference=that.userData.preferences
            observer.trigger('preferenceshahahah',preference)
        })
@@ -93,13 +93,11 @@ startMatch(){
      destinationRef.get().then(function(doc){
           var data=doc.data()
           userMatchDestination=data.userEmail
-          console.log('userMatchDestination',userMatchDestination)
-          that.update()
-     // })
+     })
      // search usersMatch profile by loop
         for (var key in userMatchDestination){
            let usersMatchRef=database.collection('users').doc(userMatchDestination[key])
-         debugger;
+
            // get matchUsers' time, accommodation, transportation
            usersMatchRef.collection('destination').doc(that.destinationMatch).get().then(function(doc){
               userMatchEmail=userMatchDestination[key];
@@ -114,7 +112,6 @@ startMatch(){
               if (matchStartTime <= that.endTime && matchEndTime >= that.startTime) {
                    that.timeMatchEmail.push(that.userMatchEmailNew)
                    console.log('heretimeMatchEmail',that.timeMatchEmail)
-                   debugger;
                } else{
                    console.log('false')
                }
@@ -204,7 +201,7 @@ startMatch(){
              // }
          }
             // console.log('timeMatchEmail',that.timeMatchEmail)
-     })
+
      }
 
 
