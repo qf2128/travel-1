@@ -152,10 +152,8 @@
       <select class="form-control" id="gender" onchange={prefferedGender}>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
-        <option value="Gay">Gay</option>
-        <option value="Lesbian">Lesbian</option>
-        <option value="Bisexual">Bisexual</option>
-        <option value="Transgender">Transgender</option>
+        <option value="Gay">Others</option>
+
       </select>
   </div>
 </div>
