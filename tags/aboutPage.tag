@@ -166,9 +166,10 @@ background-color:rgba(233,236,239,1);
 
 }
 .footage {
-  margin-top: 25px;
+  margin-top: 20px;
 color:white;
   background-color:rgba(33,37,41,0.5);
+margin-left: -130px;
 
 }
 

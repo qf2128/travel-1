@@ -151,6 +151,7 @@ submitProfile() {
       padding-top: 5em;
       padding-bottom: 5em;
       margin-top: 5em;
+
     }
     .input {
       border:0;

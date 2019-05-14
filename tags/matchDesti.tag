@@ -53,6 +53,21 @@
 
     </div>
 
+
+  </div>
+
+
+</div>
+<div class="footage">
+<div class="container">
+      <div class="row">
+          <div class="col">
+              <p>  @ 2019 Travelmate</p>
+          </div>
+      </div>
+</div>
+</div>
+
     <script>
         var that = this;
         that.userEmail = null;
@@ -102,6 +117,7 @@
                 } else {
                     newDesti = destination
                 }
+
             }
             that.destination.push(newDesti)
         })
@@ -300,6 +316,22 @@
             margin-top: 50px;
             margin-bottom: 10px;
         }
-    </style>
+
+.footage {
+  /* margin-top: 20px; */
+/* color:white;
+  background-color:rgba(33,37,41,0.5); */
+margin-left: -130px;
+
+}
+
+p{
+
+    margin-left:35%;
+}
+</style>
+
+
 
 </matchdesti>
+

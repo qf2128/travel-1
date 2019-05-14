@@ -197,10 +197,18 @@
  <br>
  <div class="row">
    <div class="col-3">
- <button class="btn btn-light" type="button" name="button" onclick={submitJourney}>Submit</button>
+ <button class="btn btn-dark" type="button" name="button" onclick={submitJourney}>Submit</button>
 </div>
 </div>
 </div>
+</div>
+<div class="footage">
+<div class="container">
+      <div class="row">
+          <div class="col">
+              <p>  @ 2019 Travelmate</p>
+          </div>
+      </div>
 </div>
 </div>
 
@@ -296,7 +304,7 @@
     </script>
 <style>
 .luggage{
-  background-image: url("images/luggage.jpg");
+  background-image: url("images/blue.jpg");
 
 }
 .container {
@@ -308,7 +316,18 @@ margin-left: 20%;
   background-color:rgba(0,64,133,0.1);
 }
 
+.footage {
+  /* margin-top: 20px; */
+/* color:white; */
+  /* background-color:rgba(33,37,41,0.5); */
+margin-left: -130px;
 
+}
+
+p{
+
+    margin-left:35%;
+}
 
 
 
