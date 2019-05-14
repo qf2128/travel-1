@@ -54,7 +54,7 @@
            <h4>Plan and enjoy your trip!</h4>
         </div>
       </div>
-=======
+
   </div>
     <div class="story">
     <div class="container">
@@ -88,7 +88,7 @@
     </a>
   </div>
       </div>
-=======
+
 
 
     </div>

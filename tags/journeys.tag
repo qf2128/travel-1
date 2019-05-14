@@ -278,6 +278,8 @@
             }
             });
 
+          
+
           submitJourney(){
               console.log('2--------',opts)
               journey={destination:destination,
@@ -295,6 +297,8 @@
                    }
 
                 observer.trigger('journey',journey)
+                startMatch="startMatch";
+                observer.trigger('startMatch',startMatch)
           }
 
     </script>
