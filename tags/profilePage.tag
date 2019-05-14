@@ -13,10 +13,10 @@
                   <h2>Gender: {userGender}</h2>
                   <h2>Age: {userAge}</h2>
                   <h2>Zodiac Sign: {userZodiac}</h2>
+                  <script>  console.log('SSSSSS222',this.userZodiac)</script>
                </div>
                <div class="col-6">
-                  <div class="avatar"><img src={mediaURL} width=250px></div>
-                     <progress value="0" max="100" id="uploader">0%</progress>
+                  <div class="avatar"><img class="marginBig" src={mediaURL} class="marginBig"></div>
                   <div class="custom-file">
                      <input type="file" value="upload" class="custom-file-input" id="portraitFile" onchange={portraitFile}>
                      <label class="custom-file-label" for="portraitFile">Want to update your image?</label>
@@ -56,33 +56,31 @@ this.mediaUEL;
 
  let usersImageRef = database.collection('portrait');
  let usersRef=database.collection('users')
+ var profile={};
+ this.percentage
+ var portraitURL="";
+ this.state="";
+ let momentsRef = database.collection('users');
+ let storageRef = firebase.storage().ref();
+ let mediaStorageRef = storageRef.child('image');
+ this.file=null;
+
 
 // get user Profile from firebase
  usersRef.doc(this.userEmail).get().then(function(doc){
      var data=doc.data()
      this.userName=data.userName;
      this.userAge=data.userAge;
+     that.update()
      this.userZodiac=data.userZodiac;
      this.userGender=data.userGender;
- })
-
- //  get images
- usersImageRef.doc(this.userEmail).get().then(function(doc){
-     var data=doc.data();
      this.mediaURL=data.mediaURL;
-     console.log('this.mediaURL',this.mediaURL);
      that.update()
  })
 
-//  change images
-var profile={};
-var portraitURL="";
-this.state="";
 
-let momentsRef = database.collection('users');
-let storageRef = firebase.storage().ref();
-let mediaStorageRef = storageRef.child('image');
-this.file=null;
+
+//  change images
 
 portraitFile(event){
     let fileInput=event.target;
@@ -103,6 +101,7 @@ save(){
     console.log('UPLOADED File');
     return snapshot.ref.getDownloadURL();
     }).then(downloadURL => {
+
     let key = momentsRef.doc(firebase.auth().currentUser.email).id;
 
     this.moment = {
@@ -113,17 +112,22 @@ save(){
      this.mediaURL=this.moment.mediaURL;
      that.update()
     return momentsRef.doc(key).set(this.moment,{merge:true});
+
+
 }).then( () => {
     console.log('SAVED to DATABASE');
     this.update();
      });;
+
+
+
     }
 
  setJourneys(){
-  var journeyState="newJourneys"
-  observer.trigger('journeyState',journeyState)
-}
 
+  var journeyState="newJourneys"
+  observer.trigger('journeyStateProfileDone',journeyState)
+}
 
 
 this.on('update', () => {
@@ -136,6 +140,15 @@ this.on('update', () => {
 </script>
 
 <style>
+
+
+.marginBig{
+  margin:15px;
+  border-radius:10%;
+  margin-left:10%;
+  width:180px;
+  height:220px;
+}
 .airBalloon {
 
   background-image: url("images/ocean.jpg");

@@ -278,7 +278,7 @@
             }
             });
 
-          
+
 
           submitJourney(){
               console.log('2--------',opts)
@@ -295,10 +295,14 @@
                        prefferedZodiac:prefferedZodiac,
 
                    }
+                if(journey.destination && journey.startTime && journey.endTime && journey.accommodation && journey.firstPrefer && journey.secondPrefer && journey.thirdPrefer && journey.transportation){
+                    observer.trigger('journey',journey)
+                    startMatch="startMatch";
+                    observer.trigger('startMatch',startMatch)
+                } else{
+                    alert("please fill all the information")
+                }
 
-                observer.trigger('journey',journey)
-                startMatch="startMatch";
-                observer.trigger('startMatch',startMatch)
           }
 
     </script>

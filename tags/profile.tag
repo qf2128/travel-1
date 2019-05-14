@@ -42,11 +42,9 @@
 
         <div class="col">
           <div class="avatar">
-              <img src="{ moment.mediaURL }" width="30%"/>
+              <img src="{ moment.mediaURL }" class="marginBig"/>
           </div>
           </div>
-
-          <progress value="0" max="100" id="uploader">0%</progress>
           <div class="custom-file">
             <input type="file" ref="media" class="custom-file-input" id="portraitFile" onchange={portraitFile}>
             <label class="custom-file-label">choose your portrait image</label>
@@ -124,10 +122,11 @@ submitProfile() {
              gender:gender,
              zodiac:zodiac,
              portrait:portraitURL}
-    console.log('profile',profile)
+    observer.trigger('age',age)
     observer.trigger('profile',profile)
     var pageState="LookProfile"
-    observer.trigger('pageState',pageState)
+    observer.trigger('pageStateSubmit',pageState)
+    console.log('pageStateSubmit',pageState)
 } else{
     alert("Please fill all the information")
 }
@@ -144,6 +143,13 @@ submitProfile() {
 
     <!-- CSS -->
     <style>
+    .marginBig{
+      margin:15px;
+      border-radius: 10%;
+      margin-left:10%;
+      width:180px;
+      height:220px;
+    }
 
     .container-fluid{
       background-color: hsla(0,0%,100%,0.8);

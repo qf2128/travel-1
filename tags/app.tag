@@ -2,20 +2,21 @@
 <navbar user={user}></navbar>
 
 
-<button type="button" name=""  onclick={setProfile} if={profileState==="createProfile"} hide={profileState==="profileDone"||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>New user? create your profile</button>
+<button type="button" name=""  onclick={setProfile} if={user && profileState==="createProfile"} hide={profileState==="profileDone"||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>New user? create your profile</button>
 <!-- <button type="button" name=""  onclick={setJourneys} if={profileState==="profileDone"} hide={this.journeyState==="newJourneys"||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>Start a new journey?</button> -->
 
-<button type="button" name=""  onclick={startMatch} if={user&&this.journeyState==="journeyDone"} hide={this.state||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>Start match?</button>
+<button type="button" name=""  onclick={startMatch} if={user && this.journeyState==="journeyDone"} hide={this.state||this.pageState==="LookProfile"||this.aboutState==="aboutUs"}>Start match?</button>
 
 <!-- <button type="button" name=""  onclick={setTravelPrefer} if={user} hide={this.profileState==="setPreference"}>Set your travel preference</button> -->
-<profile if={use || this.state==="setProfile"} hide={profileState==="profileDone"}></profile>
+<profile if={user && this.state==="setProfile"} hide={profileState==="profileDone"}></profile>
+<script> console.log('uuuuuuu',this.user,this.state)</script>
 
 <journeys if={user && this.journeyState==="newJourneys"} userEmail={this.user.email} hide={this.aboutState==="aboutState"||this.pageState==="LookProfile"||this.state==="startMatch"}></journeys>
 <matchDesti if={user && this.state==="startMatch"} hide={this.aboutState==="aboutState"||this.pageState==="LookProfile"||this.journeyState==="newJourneys"} user={user} userEmail={userEmail}></matchDesti>
 <!-- <profilePrefer user={user} show={this.state==="setPreference"}></profilePrefer> -->
 
 <profilePage if={user && this.pageState==="LookProfile"} hide={this.journeyState==="newJourneys" || this.aboutState==="aboutState" || this.state==="setProfile"} user={user}> </profilePage>
-<aboutPage if={this.aboutState==="aboutUs"}  hide={this.journeyState==="newJourneys" || this.pageState==="LookProfile" }> </aboutPage>
+<aboutPage if={this.aboutState==="aboutUs"|| !user}  hide={this.journeyState==="newJourneys" || this.pageState==="LookProfile" }> </aboutPage>
 
 
 <score></score>
@@ -26,9 +27,6 @@
             </div>
         </div>
     </div>
-  <div class="title" show={!user}>
-    Find Your TRAVEL BUDDY
-  </div>
 
 
 <script>
@@ -50,26 +48,32 @@ var journeyRef=null
 this.journeyState=""
 this.pageState=null
 this.aboutState="aboutUs";
+this.age=""
 var data=null;
 
 let usersRef = database.collection('users');
 
    observer.on('journeyState',journeyState=>{
+       if (data.userName){
        this.journeyState=journeyState;
        this.aboutState="";
        this.pageState="";
        this.state="";
+       } else {
+            alert("please fill your profile first")
+       }
+
        that.update();
    })
    observer.on('setProfile',setProfile=>{
-       if (data.userAge){
+       if (data.userName){
            this.pageState="LookProfile"
            console.log('there123',this.state)
        } else {
           this.state=setProfile
           console.log('here',this.state)
       }
-      that.update()
+       that.update()
        this.journeyState="";
        this.aboutState="";
 
@@ -84,8 +88,27 @@ let usersRef = database.collection('users');
        that.update()
    })
 
+  observer.on('journeyStateProfileDone',journeyState=>{
+      this.journeyState=journeyState;
+      this.aboutState="";
+      this.pageState="";
+      this.state="";
+      that.update()
+  })
+
+   observer.on('pageStateSubmit',pageState=>{
+       this.pageState=pageState,
+       this.journeyState="";
+       this.aboutState="";
+       this.state=""
+       var userName=data.userName
+       that.update()
+   })
+   observer.on('age',age=>{
+       this.age=age
+   })
    observer.on('pageState',pageState=>{
-       if (data.userAge){
+       if (data.userName){
            this.pageState=pageState
        } else {
            this.state="setProfile"
@@ -98,10 +121,15 @@ let usersRef = database.collection('users');
 
 
    observer.on('startMatch',startMatch=>{
-       this.state=startMatch;
-       this.journeyState="";
-       this.aboutState="";
-       this.pageState="";
+       if (data.userName){
+           this.state=startMatch
+           this.journeyState="";
+           this.aboutState="";
+           this.pageState="";
+       } else {
+           alert("please fill your profile and set journey first")
+           // this.state="setProfile"
+      }
        that.update();
        // if (this.user){
            userEmail=this.user.email;
@@ -116,6 +144,7 @@ let usersRef = database.collection('users');
    if (userObj) {
     // User is signed in.
        this.user=userObj;
+       that.update()
        userEmail=this.user.email;
 
        //observer.trigger('userEmail',userEmail)
@@ -124,18 +153,16 @@ let usersRef = database.collection('users');
            if (!doc.exists){
                console.log('no profile',data)
                that.profileState="createProfile";
-
                usersRef.doc(userObj.email).set({
-                    userName:userObj.displayName,
+                    userName:"",
                     userEmail:userObj.email
                },{merge:true})
            }
-           if (data.userAge){
+           if (data.userName){
                console.log("user has set profile")
                that.profileState="profileDone"
                console.log('have profile')
            } else{
-               data.userAge="";
                this.state="setProfile";
                that.update()
                console.log('dont have profile')
@@ -158,6 +185,7 @@ let usersRef = database.collection('users');
  else {
     // No user is signed in.
        this.user = null
+       that.update()
    }
 
 
@@ -231,9 +259,11 @@ observer.on('journey',journey=>{
    })
 
    startMatch(){
+       if (da)
        this.state="startMatch"
        that.update()
    }
+
 
 </script>
 

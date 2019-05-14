@@ -2,9 +2,9 @@
   <!-- HTML -->
 <nav class="navbar navbar-light bg-light">
 	<div class="buttonPosition">
-<button class="btn  my-2 my-sm-0" type="button"  onclick={ setJourneys } if={user||this.journeyState==="journeyDone"}>New journey</button>
-<button class="btn  my-2 my-sm-0" type="button"  onclick={ startMatch } if={user||this.journeyState==="journeyDone"}>Travel buddies</button>
-<button class="btn  my-2 my-sm-0" type="button" onclick={ profile }>Profile</button>
+<button class="btn  my-2 my-sm-0" type="button"  onclick={ setJourneys } if={user}>New journey</button>
+<button class="btn  my-2 my-sm-0" type="button"  onclick={ startMatch } if={user}>Travel buddies</button>
+<button class="btn  my-2 my-sm-0" type="button" onclick={ profile } if={user}>Profile</button>
 <button  class="btn  my-2 my-sm-0" type="button" onclick={ about }>Home</button>
 		</div>
 	  <div id="navbarSupportedContent">
@@ -80,7 +80,9 @@
     }
 
 		logout() {
-			firebase.auth().signOut()
+			firebase.auth().signOut();
+            user="";
+            observer.trigger('user'.user)
 		}
 
         this.on('update', () => {

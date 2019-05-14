@@ -8,7 +8,7 @@
                     <h1>Check out your Travelmates</h1>
                     <div class="line1">
                         <label for="destination" if={user}>Choose the journey</label>
-                        <select value="destination" onchange={startMatch}>
+                        <select value="destination" onchange={startMatch} onclick={check}>
                             <option value="">---</option>
                             <option value={item} each={item,i in destination}>{item}</option>
                         </select>
@@ -26,9 +26,9 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-6">
-                                            <img src={ item.matchUserMedia } width="130" height="130">
+                                            <img src={ item.matchUserMedia } class="marginBig">
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-6 cardInformation">
                                             Gender: {item.matchUserGender}<br/>
                                             Age: {item.matchUserAge}<br/>
                                             Zodiac Sign: {item.matchUserZodiac}<br/>
@@ -102,11 +102,11 @@
             querySnapshot.forEach(function (doc) {
                 that.destination.push(doc.id)
                 that.update()
-
             })
         }).catch(function (error) {
             console.log("Error getting documents: ", error);
         })
+
         // }) create options in select
         observer.on('destination', destination => {
             var lengthDesti = that.destination.length
@@ -122,8 +122,14 @@
             that.destination.push(newDesti)
         })
 
+        check(){
+            console.log('dddddd',that.destination)
+        if(that.destination.length==0){
+             alert('opps, you have not planned your journey');
+             }
+        }
+
         startMatch() {
-            console.log('here')
             let usersRef = database.collection('users').doc(that.userEmail);
             that.destinationMatch = event.target.value
 
@@ -149,6 +155,7 @@
                 var data = doc.data()
                 userMatchDestination = data.userEmail
                 console.log('userMatchDestination', userMatchDestination)
+
                 that.update()
                 // }) search usersMatch profile by loop
                 for (var key in userMatchDestination) {
@@ -276,7 +283,6 @@
                                         matchUserMedia: that.matchProfileData.mediaURL, //undef
                                         matchScore: score
                                     }
-                                debugger;
 
                                 console.log("123-----", userMatchData)
                                 that.allUserMatchData.push(userMatchData)
@@ -300,6 +306,18 @@
     </script>
 
     <style>
+    .marginBig{
+      margin:10px;
+      border-radius: 10%;
+      padding-left:2px;
+      width:180px;
+      height:220px;
+    }
+
+    .cardInformation{
+       padding-right:5px;
+
+    }
         .widthlarge{
             width:600px
 
