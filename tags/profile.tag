@@ -17,7 +17,7 @@
         <select class="form-control" id="gender">
           <option>Male</option>
           <option>Female</option>
-          <option>others</option>
+          <option>other</option>
         </select>
 
         <label>Zodiac:</label>
