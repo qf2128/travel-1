@@ -35,6 +35,7 @@ this.user=null
 this.userProfile = null
 this.state=null
 var userEmail=""
+var userName=""
 this.startTime=""
 this.endTime=""
 this.destination=""
@@ -66,7 +67,7 @@ let usersRef = database.collection('users');
        that.update();
    })
    observer.on('setProfile',setProfile=>{
-       if (data.userName){
+       if (userName){
            this.pageState="LookProfile"
            console.log('there123',this.state)
        } else {
@@ -108,7 +109,7 @@ let usersRef = database.collection('users');
        this.age=age
    })
    observer.on('pageState',pageState=>{
-       if (data.userName){
+       if (userName){
            this.pageState=pageState
        } else {
            this.state="setProfile"
@@ -140,9 +141,9 @@ let usersRef = database.collection('users');
 
    firebase.auth().onAuthStateChanged(userObj=> {
        console.log('userrrr',userObj)
-
    if (userObj) {
     // User is signed in.
+       this.aboutState="aboutUs";
        this.user=userObj;
        that.update()
        userEmail=this.user.email;
@@ -153,12 +154,14 @@ let usersRef = database.collection('users');
            if (!doc.exists){
                console.log('no profile',data)
                that.profileState="createProfile";
+               taht.update();
                usersRef.doc(userObj.email).set({
-                    userName:"",
+                    // userName:,
                     userEmail:userObj.email
                },{merge:true})
            }
            if (data.userName){
+               userName=data.userName
                console.log("user has set profile")
                that.profileState="profileDone"
                console.log('have profile')
@@ -184,7 +187,12 @@ let usersRef = database.collection('users');
 
  else {
     // No user is signed in.
-       this.user = null
+       this.user = null;
+       this.aboutState==="aboutUs";
+       this.journeyState="";
+       this.aboutState="";
+       this.pageState="";
+       this.state="";
        that.update()
    }
 
