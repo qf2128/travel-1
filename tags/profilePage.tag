@@ -79,7 +79,7 @@ var profile={};
 var portraitURL="";
 this.state="";
 
-let momentsRef = database.collection('portrait');
+let momentsRef = database.collection('users');
 let storageRef = firebase.storage().ref();
 let mediaStorageRef = storageRef.child('image');
 this.file=null;
@@ -106,15 +106,13 @@ save(){
     let key = momentsRef.doc(firebase.auth().currentUser.email).id;
 
     this.moment = {
-    author: firebase.auth().currentUser.email,
     mediaURL: downloadURL,
     mediaType: this.file.type,
-    id: key,
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
     };
      this.mediaURL=this.moment.mediaURL;
      that.update()
-    return momentsRef.doc(key).set(this.moment);
+    return momentsRef.doc(key).set(this.moment,{merge:true});
 }).then( () => {
     console.log('SAVED to DATABASE');
     this.update();

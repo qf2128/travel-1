@@ -44,13 +44,10 @@
           <div class="avatar">
               <img src="{ moment.mediaURL }" width="30%"/>
           </div>
+          </div>
+
           <progress value="0" max="100" id="uploader">0%</progress>
           <div class="custom-file">
-
-            <input type="file" value="upload" class="custom-file-input" id="portraitFile">
-            <label class="custom-file-label" id="fileButton" for="portraitFile">Choose file</label>
-
-
             <input type="file" ref="media" class="custom-file-input" id="portraitFile" onchange={portraitFile}>
             <label class="custom-file-label">choose your portrait image</label>
             <button type="button" name="button" onclick={ save } disabled={ !file }>save image</button>
@@ -68,7 +65,7 @@ var portraitURL="";
 
 this.state="";
 
-let momentsRef = database.collection('portrait');
+let momentsRef = database.collection('users');
 let storageRef = firebase.storage().ref();
 let mediaStorageRef = storageRef.child('image');
 this.file=null;
@@ -81,8 +78,11 @@ portraitFile(event){
     let fileSize= file.size;
     let fileType= file.type;
     this.file = file;
-}
 
+    console.log("file",this.file)
+    debugger;
+}
+console.log("file",this.file)
 save(){
     let uniqueName = this.file.name + "-" + Date.now();
     let fileRef = mediaStorageRef.child(uniqueName);
@@ -95,14 +95,13 @@ save(){
     let key = momentsRef.doc(firebase.auth().currentUser.email).id;
 
     this.moment = {
-    author: firebase.auth().currentUser.email,
     mediaURL: downloadURL,
     mediaType: this.file.type,
     id: key,
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
     };
     console.log('moment',this.moment)
-    return momentsRef.doc(key).set(this.moment);
+    return momentsRef.doc(key).set(this.moment,{merge:true});
 }).then( () => {
     console.log('SAVED to DATABASE');
     this.reset();
@@ -119,7 +118,7 @@ submitProfile() {
     var zodiac=document.getElementById('zodiac').value;
     var portraitURL=document.getElementById('portraitFile').value;
 
-    if(userName&&age&&gender&&zodiac&&portraitURL){
+    if(userName && age && gender && zodiac && portraitURL){
     profile={userName:userName,
              age:age,
              gender:gender,
@@ -151,7 +150,6 @@ submitProfile() {
       padding-top: 5em;
       padding-bottom: 5em;
       margin-top: 5em;
-
     }
     .input {
       border:0;

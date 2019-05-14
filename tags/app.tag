@@ -128,7 +128,7 @@ let usersRef = database.collection('users');
                usersRef.doc(userObj.email).set({
                     userName:userObj.displayName,
                     userEmail:userObj.email
-               })
+               },{merge:true})
            }
            if (data.userAge){
                console.log("user has set profile")

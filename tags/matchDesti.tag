@@ -18,7 +18,7 @@
 
                     <div class="results">
 
-                        <div class="card" value={item} each={item,i in allUserMatchData}>
+                        <div class="card widthlarge" value={item} each={item,i in allUserMatchData}>
                             { console.log('xxxxxxxxxx', item); console.log(allUserMatchData) }
                             <div class="card-header">{ item.matchUserName }</div>
                             <div class="card-body">
@@ -26,7 +26,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-6">
-                                            <img src="{ item.mediaURL }">
+                                            <img src={ item.matchUserMedia } width="130" height="130">
                                         </div>
                                         <div class="col-6">
                                             Gender: {item.matchUserGender}<br/>
@@ -165,6 +165,7 @@
                         that.userMatchEmailNew = matchData.userEmail
 
                         // filter time
+
                         if (matchStartTime <= that.endTime && matchEndTime >= that.startTime && that.userMatchEmailNew != that.userEmail) {
                             that.timeMatchEmail.push(that.userMatchEmailNew)
 
@@ -257,14 +258,14 @@
                                 // make userinformation for cards
                                 var score = transportaionScore + accommodationScore + zodiacScore + genderScore + 15
                                   console.log('hahahahhaha',score)
-                                let usersImageRef = database.collection('portrait');
-
-                                usersImageRef.doc(that.userMatchEmailNew).get().then(function (doc) {
-                                    console.log("here--------", doc.data())
-                                    that.mediaURL = data.mediaURL;
-
-                                    that.update();
-                                })
+                                // let usersImageRef = database.collection('portrait');
+                                //
+                                // usersImageRef.doc(that.userMatchEmailNew).get().then(function (doc) {
+                                //     console.log("here--------", doc.data())
+                                //     that.mediaURL = data.mediaURL;
+                                //     var mediaURL=that.mediaURL
+                                //     that.update();
+                                // })
 
                                 userMatchData = {
                                         matchUserName: that.matchProfileData.userName,
@@ -272,10 +273,10 @@
                                         matchUserGender: that.matchProfileData.userGender,
                                         matchUserZodiac: that.matchProfileData.userZodiac,
                                         matchUserEmail: that.matchProfileData.userEmail,
-                                        matchUserMedia: that.mediaURL, //undef
+                                        matchUserMedia: that.matchProfileData.mediaURL, //undef
                                         matchScore: score
                                     }
-
+                                debugger;
 
                                 console.log("123-----", userMatchData)
                                 that.allUserMatchData.push(userMatchData)
@@ -283,6 +284,7 @@
                                 matchZodiac = that.matchProfileData.userZodiac;
                                 console.log('------------', that.allUserMatchData)
                                 that.update();
+
 
                             })
                         }
@@ -298,7 +300,10 @@
     </script>
 
     <style>
+        .widthlarge{
+            width:600px
 
+        }
         .effiel {
             background-image: url("images/effielTower.jpg");
         }
@@ -334,4 +339,3 @@ p{
 
 
 </matchdesti>
-
