@@ -85,7 +85,6 @@
         var matchGender = "";
         var matchZodiac = "";
         var userMatchData ={};
-        that.allUserMatchData = [];
         // var genderScore=0; var zodiacScore=0; var transportaionScore=0; var totalScore=0;
         var preference = [];
         this.timeMatchEmail = [];
@@ -130,6 +129,7 @@
         }
 
         startMatch() {
+            that.allUserMatchData = [];
             let usersRef = database.collection('users').doc(that.userEmail);
             that.destinationMatch = event.target.value
 
@@ -169,22 +169,24 @@
                         userMatchTransportation = matchData.transportation;
                         let matchEndTime = matchData.endTime;
                         let matchStartTime = matchData.startTime;
-                        that.userMatchEmailNew = matchData.userEmail
+
 
                         // filter time
 
-                        if (matchStartTime <= that.endTime && matchEndTime >= that.startTime && that.userMatchEmailNew != that.userEmail) {
-                            that.timeMatchEmail.push(that.userMatchEmailNew)
+                        if (matchStartTime <= that.endTime && matchEndTime >= that.startTime && matchData.userEmail != that.userEmail) {
+                            that.userMatchEmailNew = matchData.userEmail;
+                            that.timeMatchEmail.push(that.userMatchEmailNew);
 
-                            console.log('heretimeMatchEmail', that.userEmail)
+                            console.log('heretimeMatchEmail', that.userMatchEmailNew)
                             console.log('heretimeMatchEmail', that.timeMatchEmail)
                             // debugger;
                         } else {
+                            that.userMatchEmailNew=""
                             console.log('false')
                         }
                         // get users' profile: gender, zodiac
                         let timeMatchRef = usersRef.collection('destination').doc(that.destinationMatch).collection('timeMatchEmail')
-                        if (userMatchDestination[key] != that.userEmail) {
+                        if (that.userMatchEmailNew) {
                             usersMatchRef.get().then(function (doc) {
                                 that.matchProfileData = doc.data();
 
