@@ -89,10 +89,8 @@
   <option value="">---</option>
   <option value="gender"> travel buddy's gender</option>
   <option value="zodiac">travel buddy's zodiac</option>
-  <option value="ages">travel buddy's ages</option>
   <option value="accommodationExpense">accommodation expense</option>
   <option value="transportation">transportation</option>
-  <option value="travelType">travel type (casual/planned)</option>
 </select>
    <br>The Second:
 <select class="form-control" value="second" onchange={secondPreferSet}>
@@ -105,12 +103,10 @@
    <br>The Third:
 <select  class="form-control" value="third" onchange={thirdPreferSet}>
     <option value="">---</option>
-    <option value="gender">gender</option>
-    <option value="zodiac">zodiac</option>
-    <option value="ages">ages</option>
+    <option value="gender">travel buddy's gender</option>
+    <option value="zodiac">travel buddy's zodiac</option>
     <option value="accommodationExpense">accommodation expense</option>
     <option value="transportation">transportation</option>
-    <option value="travelType">travel type (casual/planned)</option>
 </select>
 </div>
 </div>
