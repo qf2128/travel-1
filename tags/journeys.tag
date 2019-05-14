@@ -99,10 +99,8 @@
     <option value="">---</option>
     <option value="gender">travel buddy's gender</option>
     <option value="zodiac">travel buddy's zodiac</option>
-    <option value="ages">travel buddy's ages</option>
-    <option value="accommodationExpense">accommodation expense</option>
+    <option value="accommodationExpense">accommodation budget</option>
     <option value="transportation">transportation</option>
-    <option value="travelType">travel type (casual/planned)</option>
 </select>
    <br>The Third:
 <select  class="form-control" value="third" onchange={thirdPreferSet}>
@@ -123,11 +121,11 @@
 <div>
     <br>
 <h3> 4: Choose a star rating of accommodation </h3>
-<button type="button" class="btn btn-outline-dark" id="button1">1 star</button>
-<button type="button" class="btn btn-outline-dark" id="button1"> 2 star </button>
-<button type="button" class="btn btn-outline-dark" id="button1"> 3 star </button>
-  <button type="button" class="btn btn-outline-dark" id="button1"> 4 star </button>
-    <button type="button" class="btn btn-outline-dark" id="button1"> 5 star </button>
+<button type="button" class="btn btn-outline-dark" id="button1"> * </button>
+<button type="button" class="btn btn-outline-dark" id="button1"> ** </button>
+<button type="button" class="btn btn-outline-dark" id="button1"> *** </button>
+  <button type="button" class="btn btn-outline-dark" id="button1"> **** </button>
+    <button type="button" class="btn btn-outline-dark" id="button1"> ***** </button>
 </div>
 </div>
 </div>

@@ -78,7 +78,6 @@ portraitFile(event){
     this.file = file;
 
     console.log("file",this.file)
-    debugger;
 }
 console.log("file",this.file)
 save(){
