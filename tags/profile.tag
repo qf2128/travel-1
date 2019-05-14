@@ -17,10 +17,7 @@
         <select class="form-control" id="gender">
           <option>Male</option>
           <option>Female</option>
-          <option>Gay</option>
-          <option>Lesbian</option>
-          <option>Bisexual</option>
-          <option>Transgender</option>
+          <option>others</option>
         </select>
 
         <label>Zodiac:</label>
